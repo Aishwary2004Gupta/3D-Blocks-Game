@@ -1,5 +1,4 @@
 import * as THREE from "three";
-
 const scene = new THREE.Scene();
 
 //cube 
@@ -29,13 +28,13 @@ const camera = new THREE.OrthographicCamera(
   1000 //far
 );
 
-camera.position.set(10, 10, 10);
+camera.position.set(4, 4, 4);
 camera.lookAt(0, 0, 0); //not the position but the direction that matters here
 
 //renderer
 const renderer = new THREE.WebGLRenderer( {antialias: true} );
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.render(scene, camera)
+renderer.render(scene, camera);
 
 //adding it to the HTML
 document.body.appendChild(renderer.domElement);
