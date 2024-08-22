@@ -17,5 +17,26 @@ const directional = new THREE.DirectionalLight(0xfffff, 0.6);
 directional.position.set(10, 15, 0); //y direction is the brightest
 scene.add(directional); //acts like the sun
 
-//camera
+//camera (orthographic projections)
+const width = 10;
+const height = width / (window.innerWidth / window.innerHeight);
+const camera = new THREE.OrthographicCamera(
+  width / -2,
+  width / 2,
+  height / 2,
+  height / -2,
+  1, //near
+  1000 //far
+);
+
+camera.position.set(10, 10, 10);
+camera.lookAt(0, 0, 0); //not the position but the direction that matters here
+
+//renderer
+const renderer = new THREE.WebGLRenderer( {antialias: true} );
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.render(scene, camera)
+
+//adding it to the HTML
+document.body.appendChild(renderer.domElement);
 
