@@ -10,5 +10,12 @@ mesh.position.set(0, 0, 0);
 scene.add(mesh);
 
 //lights
+const ambient = new THREE.AmbientLight(0xfffff, 0.6);
+scene.add(ambient);
 
+const directional = new THREE.DirectionalLight(0xfffff, 0.6);
+directional.position.set(10, 15, 0); //y direction is the brightest
+scene.add(directional); //acts like the sun
+
+//camera
 
