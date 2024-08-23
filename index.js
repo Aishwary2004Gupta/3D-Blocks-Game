@@ -7,7 +7,7 @@ const originalBoxSize = 2;
 const boxHeight = 0.6;
 let stack = [];
 let overhangs = [];
-// let gameStarted = false;
+let gameStarted = false;
 let stackedCount = 0; // Initialize the count
 
 function init() {
@@ -222,5 +222,16 @@ function cutBox(topLayer, overlap, size, delta){
     );
     topLayer.cannonjs.shapes = [];
     topLayer.cannonjs.addShape(shape);
+}
+
+//simulating time passing
+function updatePhysics(){
+    world.step(1/60); //
+    
+    //copying coordinates from CannonJs to Three.js
+    overhangs.forEach((element, index) => {
+        element.threejs.position.copy(element.cannonjs.position);
+        element.threejs.quaternion.copy(element.cannonjs.quaternion);
+    });
 }
 
