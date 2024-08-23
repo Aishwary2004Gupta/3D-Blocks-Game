@@ -4,6 +4,7 @@ let camera, scene, renderer;
 const originalBoxSize = 2;
 const boxHeight = 0.6;
 let stack = [];
+let overhangs = [];
 let gameStarted = false;
 let stackedCount = 0; // Initialize the count
 
@@ -65,6 +66,12 @@ function addLayer(x, z, width, depth, direction) {
     stack.push(layer);
 }
 
+function addOverhang(x, z, width, depth) {
+    const y = boxHeight * (stack.length - 1);
+    const overhang = generateBox(x, y, z, width, depth);
+    overhangs.push(overhang);
+}
+
 function generateBox(x, y, z, width, depth) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
@@ -115,7 +122,20 @@ window.addEventListener("click", () => {
             topLayer.threejs.scale[direction] = overlap / size; //scaling the mesh
             topLayer.threejs.position[direction] -= delta / 2;
 
-            //
+            //overhang
+            const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta); //sign returns -1/1 or 0 depending on the situation
+            const overhangX = 
+                direction === "x" 
+                ? topLayer.threejs.position.x + overhangShift 
+                : topLayer.threejs.position.x;
+            const overhangZ =
+                direction === "z"
+                ? topLayer.threejs.position.z + overhangShift
+                : topLayer.threejs.position.z;
+            const overhangWidth = direction == "x" ? overhangShift : newWidth;
+            const overhangDepth = direction == "z" ? overhangShift : newDepth;
+
+            addOverhang(overhangX, overhangZ, overhangWidth, overhangDepth);
 
             //next layer
             const nextX = direction === "x" ? topLayer.threejs.position.x : -10;
