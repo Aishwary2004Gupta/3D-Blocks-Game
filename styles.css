@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    background-color: #000;
+    color: white;
+  }
+  
+  #score {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+  }
+  
+  #instructions, #results {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  #results {
+    display: none;
+  }
+  
+  body.game-over #results {
+    display: block;
+  }
+  
+  body.game-over #score, body.game-over #instructions {
+    display: none;
+  }
+  
