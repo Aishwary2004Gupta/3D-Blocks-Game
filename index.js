@@ -5,6 +5,7 @@ const originalBoxSize = 2;
 const boxHeight = 0.6;
 let stack = [];
 let gameStarted = false;
+let stackedCount = 0; // Initialize the count
 
 function init() {
     scene = new THREE.Scene();
@@ -41,6 +42,18 @@ function init() {
     document.body.appendChild(renderer.domElement);
 
     renderer.render(scene, camera);
+
+    // Add stacked count display
+    const countDisplay = document.createElement("div");
+    countDisplay.id = "stackedCount";
+    countDisplay.style.position = "absolute";
+    countDisplay.style.top = "10px";
+    countDisplay.style.left = "10px";
+    countDisplay.style.color = "white";
+    countDisplay.style.fontSize = "24px";
+    countDisplay.style.fontFamily = "Arial, sans-serif";
+    countDisplay.textContent = `Stacked Boxes: ${stackedCount}`;
+    document.body.appendChild(countDisplay);
 }
 
 function addLayer(x, z, width, depth, direction) {
@@ -76,7 +89,41 @@ window.addEventListener("click", () => {
         gameStarted = true;
     } else {
         const topLayer = stack[stack.length - 1];
+        const previousLayer = stack[stack.length - 2];
+
         const direction = topLayer.direction;
+
+        const delta = //can be +ve or -ve
+            topLayer.threejs.position[direction] -
+            previousLayer.threejs.position[direction];
+
+        const overhangSize = Math.abs(delta);
+        const size = direction == "x" ? topLayer.width : topLayer.depth;
+        const overlap = size - overhangSize;
+
+        if (overlap > 0){
+
+            //cutting the layer
+            const newWidth = direction == "x" ? overlap : topLayer.width;
+            const newDepth = direction == "z" ? overlap : topLayer.depth;
+
+            //only one would change out of them
+            topLayer.width = newWidth;
+            topLayer.depth = newDepth;
+
+            // update ThreeJS model
+            topLayer.threejs.scale[direction] = overlap / size; //scaling the mesh
+            topLayer.threejs.position[direction] -= delta / 2;
+
+            //
+
+            //next layer
+            const nextX = direction === "x" ? topLayer.threejs.position.x : -10;
+            const nextZ = direction === "z" ? topLayer.threejs.position.z : -10;
+            const nextDirection = direction === "x" ? "z" : "x"; //switching the direction everytime
+            
+            addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+        }
 
         //not stopping the layer just adding the next box on the top
 
@@ -88,6 +135,10 @@ window.addEventListener("click", () => {
         const nextDirection = direction === "x" ? "z" : "x"; //switching the direction everytime
 
         addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+        
+        // Increment the stacked count
+        stackedCount++;
+        document.getElementById("stackedCount").textContent = `Stacked Boxes: ${stackedCount}`;
     }
 });
 
