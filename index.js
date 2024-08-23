@@ -66,16 +66,18 @@ function addLayer(x, z, width, depth, direction) {
     stack.push(layer);
 }
 
+//overhanging parts do not have directions and we dont want to simulate gravity by ourselves. Therefore we will use Cannon js to simulate physics
+
 function addOverhang(x, z, width, depth) {
     const y = boxHeight * (stack.length - 1);
     const overhang = generateBox(x, y, z, width, depth);
     overhangs.push(overhang);
-}
+} 
 
 function generateBox(x, y, z, width, depth) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
-    const color = new THREE.Color(`hsl(${50 + stack.length * 4}, 100%, 50%)`);
+    const color = new THREE.Color(`hsl(${60 + stack.length * 4}, 100%, 50%)`);
     const material = new THREE.MeshLambertMaterial({ color });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -86,7 +88,7 @@ function generateBox(x, y, z, width, depth) {
         threejs: mesh,
         width,
         depth,
-        direction: null
+        // direction: null
     };
 }
 
