@@ -85,7 +85,7 @@ window.addEventListener("click", () => {
         const nextZ = direction === "z" ? 0 : -10;
         const newWidth = originalBoxSize;
         const newDepth = originalBoxSize;
-        const nextDirection = direction === "x" ? "z" : "x";
+        const nextDirection = direction === "x" ? "z" : "x"; //switching the direction everytime
 
         addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
     }
