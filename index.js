@@ -1,6 +1,7 @@
 import * as THREE from "three";
 
 let camera, scene, renderer;
+let world; //CannonJs world
 const originalBoxSize = 2;
 const boxHeight = 0.6;
 let stack = [];
