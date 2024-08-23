@@ -51,7 +51,6 @@ function addLayer(x, z, width, depth, direction) {
 
     stack.push(layer);
 }
-
 function generateBox(x, y, z, width, depth) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
