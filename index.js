@@ -55,7 +55,7 @@ function addLayer(x, z, width, depth, direction) {
 function generateBox(x, y, z, width, depth) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
-    const color = new THREE.Color(`hsl(${30 + stack.length * 4}, 100%, 50%)`);
+    const color = new THREE.Color(`hsl(${50 + stack.length * 4}, 100%, 50%)`);
     const material = new THREE.MeshLambertMaterial({ color });
 
     const mesh = new THREE.Mesh(geometry, material);
@@ -79,7 +79,7 @@ window.addEventListener("click", () => {
         const direction = topLayer.direction;
 
         // Stop the current layer
-        topLayer.direction = null;
+        // topLayer.direction = null;
 
         // Prepare the next layer
         const nextX = direction === "x" ? 0 : -10;
