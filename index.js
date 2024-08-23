@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import * as CANNON from 'cannon-es';
 
 let camera, scene, renderer;
 let world; //CannonJs world
@@ -6,10 +7,17 @@ const originalBoxSize = 2;
 const boxHeight = 0.6;
 let stack = [];
 let overhangs = [];
-let gameStarted = false;
+// let gameStarted = false;
 let stackedCount = 0; // Initialize the count
 
 function init() {
+
+    // Initializing CannonJs
+    world = new CANNON.World();
+    world.gravity.set(0, -10, 0); //gravity pulling down
+    world.broadphase = new CANNON.NaiveBroadphase();
+    world.solver.iterations = 40;
+
     scene = new THREE.Scene();
 
     // Start with two layers
@@ -61,7 +69,7 @@ function init() {
 function addLayer(x, z, width, depth, direction) {
     const y = boxHeight * stack.length;
 
-    const layer = generateBox(x, y, z, width, depth);
+    const layer = generateBox(x, y, z, width, depth, false);
     layer.direction = direction;
 
     stack.push(layer);
