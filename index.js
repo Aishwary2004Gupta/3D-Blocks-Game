@@ -92,7 +92,7 @@ window.addEventListener("click", () => {
 });
 
 function animation() {
-    const speed = 0.15;
+    const speed = 0.12;
 
     const topLayer = stack[stack.length - 1];
     if (topLayer.direction) {
