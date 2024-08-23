@@ -1,8 +1,8 @@
 import * as THREE from "three";
 
 let camera, scene, renderer;
-const originalBoxSize = 4;
-const boxHeight = 1;
+const originalBoxSize = 2;
+const boxHeight = 0.6;
 let stack = [];
 let gameStarted = false;
 
@@ -51,6 +51,7 @@ function addLayer(x, z, width, depth, direction) {
 
     stack.push(layer);
 }
+
 function generateBox(x, y, z, width, depth) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
