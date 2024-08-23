@@ -79,11 +79,11 @@ function addLayer(x, z, width, depth, direction) {
 
 function addOverhang(x, z, width, depth) {
     const y = boxHeight * (stack.length - 1);
-    const overhang = generateBox(x, y, z, width, depth);
+    const overhang = generateBox(x, y, z, width, depth, true);
     overhangs.push(overhang);
 } 
 
-function generateBox(x, y, z, width, depth) {
+function generateBox(x, y, z, width, depth, falls) {
     const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
     const color = new THREE.Color(`hsl(${60 + stack.length * 4}, 100%, 50%)`);
@@ -92,6 +92,15 @@ function generateBox(x, y, z, width, depth) {
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(x, y, z);
     scene.add(mesh);
+
+    // Cannon.js body
+    const shape = new CANNON.Box( //defining its center to its sides
+        new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
+    );
+    let mass = falls ? 5 : 0;
+    const body = new CANNON.Body({ mass, shape });
+    body.position.set(x, y, z);
+    world.addBody(body);
 
     return {
         threejs: mesh,
@@ -122,16 +131,16 @@ window.addEventListener("click", () => {
         if (overlap > 0){
 
             //cutting the layer
-            const newWidth = direction == "x" ? overlap : topLayer.width;
-            const newDepth = direction == "z" ? overlap : topLayer.depth;
+            // const newWidth = direction == "x" ? overlap : topLayer.width;
+            // const newDepth = direction == "z" ? overlap : topLayer.depth;
 
-            //only one would change out of them
-            topLayer.width = newWidth;
-            topLayer.depth = newDepth;
+            // //only one would change out of them
+            // topLayer.width = newWidth;
+            // topLayer.depth = newDepth;
 
-            // update ThreeJS model
-            topLayer.threejs.scale[direction] = overlap / size; //scaling the mesh
-            topLayer.threejs.position[direction] -= delta / 2;
+            // // update ThreeJS model
+            // topLayer.threejs.scale[direction] = overlap / size; //scaling the mesh
+            // topLayer.threejs.position[direction] -= delta / 2;
 
             //overhang
             const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta); //sign returns -1/1 or 0 depending on the situation
@@ -177,9 +186,8 @@ function animation() {
     const speed = 0.12;
 
     const topLayer = stack[stack.length - 1];
-    if (topLayer.direction) {
-        topLayer.threejs.position[topLayer.direction] += speed;
-    }
+    topLayer.threejs.position[topLayer.direction] += speed;
+    topLayer.cannonjs.position[topLayer.direction] += speed;
 
     // Raise the camera as the stack grows
     if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
@@ -188,5 +196,31 @@ function animation() {
 
     renderer.render(scene, camera);
 }
+lastTime = time;
 
 init();
+
+function cutBox(topLayer, overlap, size, delta){
+    const direction = topLayer.direction
+    const newWidth = direction == "x" ? overlap : topLayer.width;
+    const newDepth = direction == "z" ? overlap : topLayer.depth;
+
+            //only one would change out of them
+    topLayer.width = newWidth;
+    topLayer.depth = newDepth;
+
+            // update ThreeJS model
+    topLayer.threejs.scale[direction] = overlap / size; //scaling the mesh
+    topLayer.threejs.position[direction] -= delta / 2;
+
+    topLayer.cannonjs.position[direction] -= delta / 2;
+
+    //Replace the shape to a smaller one 
+    //cannot simply scale a shape in CannonJs
+    const shape = new CANNON.Box(
+        new CANNON.Vec3(newWidth / 2, boxHeight / 2, newDepth / 2)
+    );
+    topLayer.cannonjs.shapes = [];
+    topLayer.cannonjs.addShape(shape);
+}
+
