@@ -23,7 +23,7 @@ function setRobotPrecision() {
 }
 
 function init() {
-  autopilot = true;
+  autopilot = false;
   gameEnded = false;
   lastTime = 0;
   stack = [];
@@ -320,14 +320,20 @@ window.addEventListener("resize", () => {
 });
 
 window.addEventListener("click", () => {
-  if (autopilot) startGame();
-  else placeLayer();
+  if (gameEnded) {
+    startGame();
+  } else {
+    placeLayer();
+  }
 });
 
 window.addEventListener("keydown", (event) => {
   if (event.key == " ") {
-    if (autopilot) startGame();
-    else placeLayer();
+    if (gameEnded) {
+      startGame();
+    } else {
+      placeLayer();
+    }
   } else if (event.key.toLowerCase() == "r") {
     startGame();
   }
