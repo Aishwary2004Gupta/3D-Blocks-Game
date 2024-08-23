@@ -78,8 +78,7 @@ window.addEventListener("click", () => {
         const topLayer = stack[stack.length - 1];
         const direction = topLayer.direction;
 
-        // Stop the current layer
-        // topLayer.direction = null;
+        //not stopping the layer just adding the next box on the top
 
         // Prepare the next layer
         const nextX = direction === "x" ? 0 : -10;
