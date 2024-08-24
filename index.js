@@ -86,6 +86,7 @@ function startGame() {
   stack = [];
   overhangs = [];
 
+  // Hide instructions and results when the game starts
   if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "none";
   if (scoreElement) scoreElement.innerText = 0;
@@ -119,6 +120,15 @@ function startGame() {
 
   // Start the animation loop
   renderer.setAnimationLoop(animation);
+}
+
+function endGame() {
+  gameEnded = true;
+  renderer.setAnimationLoop(null); // Stop the animation loop
+
+  // Show instructions and results when the game ends
+  if (instructionsElement) instructionsElement.style.display = "block";
+  if (resultsElement) resultsElement.style.display = "block";
 }
 
 function addLayer(x, z, width, depth, direction, isInitial = false) {
@@ -313,14 +323,25 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+function missedTheSpot() {
+  const topLayer = stack[stack.length - 1];
+
+  // Stop the game
+  if (topLayer.threejs.position[topLayer.direction] > 10) {
+    gameEnded = true;
+    if (resultsElement) resultsElement.style.display = "flex";
+    if (instructionsElement) instructionsElement.style.display = "block"; // Show instructions when game ends
+  }
+}
+
 window.addEventListener("click", () => {
-  if (autopilot) startGame();
+  if (autopilot || gameEnded) startGame();
   else placeLayer();
 });
 
 window.addEventListener("keydown", (event) => {
   if (event.key == " ") {
-    if (autopilot) startGame();
+    if (autopilot || gameEnded) startGame();
     else placeLayer();
   } else if (event.key.toLowerCase() == "r") {
     startGame();

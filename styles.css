@@ -13,17 +13,19 @@ body {
     font-size: 24px;
   }
   
-  #instructions, #results {
+  #instructions {
     position: absolute;
-    top: 50%;
+    bottom: 20px; /* Adjust this value as needed */
     left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: none;
+    transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    color: white;
+    padding: 10px 20px;
     border-radius: 10px;
+    font-size: 16px;
+    text-align: center;
   }
+  
   
   #results {
     display: none;
