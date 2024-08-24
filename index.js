@@ -7,7 +7,7 @@ let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
 const boxHeight = 1; // Height of each layer
 const originalBoxSize = 3; // Original width and height of a box
-let autopilot;
+let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
 let robotPrecision; // Determines how precise the game is on autopilot
 
@@ -17,13 +17,11 @@ const resultsElement = document.getElementById("results");
 
 init();
 
-// Determines how precise the game is on autopilot
 function setRobotPrecision() {
   robotPrecision = Math.random() * 1 - 0.5;
 }
 
 function init() {
-  autopilot = false;
   gameEnded = false;
   lastTime = 0;
   stack = [];
@@ -50,23 +48,13 @@ function init() {
     100 // far plane
   );
 
-  /*
-  // If you want to use perspective camera instead, uncomment these lines
-  camera = new THREE.PerspectiveCamera(
-    45, // field of view
-    aspect, // aspect ratio
-    1, // near plane
-    100 // far plane
-  );
-  */
-
   camera.position.set(4, 4, 4);
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
 
-  // Foundation
-  addLayer(0, 0, originalBoxSize, originalBoxSize);
+  // Foundation (initial block with light red color)
+  addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
 
   // First layer
   addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
@@ -82,8 +70,13 @@ function init() {
   // Set up renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setAnimationLoop(animation);
   document.body.appendChild(renderer.domElement);
+
+  // Render the initial scene
+  renderer.render(scene, camera);
+
+  // Show instructions
+  if (instructionsElement) instructionsElement.style.display = "block";
 }
 
 function startGame() {
@@ -111,8 +104,8 @@ function startGame() {
       scene.remove(mesh);
     }
 
-    // Foundation
-    addLayer(0, 0, originalBoxSize, originalBoxSize);
+    // Foundation (initial block with light red color)
+    addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
 
     // First layer
     addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
@@ -123,11 +116,14 @@ function startGame() {
     camera.position.set(4, 4, 4);
     camera.lookAt(0, 0, 0);
   }
+
+  // Start the animation loop
+  renderer.setAnimationLoop(animation);
 }
 
-function addLayer(x, z, width, depth, direction) {
+function addLayer(x, z, width, depth, direction, isInitial = false) {
   const y = boxHeight * stack.length; // Add the new box one layer higher
-  const layer = generateBox(x, y, z, width, depth, false);
+  const layer = generateBox(x, y, z, width, depth, false, isInitial);
   layer.direction = direction;
   stack.push(layer);
 }
@@ -139,10 +135,12 @@ function addOverhang(x, z, width, depth) {
 }
 
 // Create a box
-function generateBox(x, y, z, width, depth, falls) {
+function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
-  const color = new THREE.Color(`hsl(${100 + stack.length * 4}, 100%, 50%)`);
+
+  // Set color based on whether it's the initial block
+  const color = new THREE.Color(`hsl(${100 + stack.length * 4}, 100%, 50%)`);  
   const material = new THREE.MeshLambertMaterial({ color });
 
   const mesh = new THREE.Mesh(geometry, material);
@@ -231,6 +229,8 @@ function animation(time) {
 
     updatePhysics(timePassed);
     renderer.render(scene, camera);
+
+    if (instructionsElement) instructionsElement.style.display = "block";
   }
   lastTime = time;
 }
@@ -309,31 +309,19 @@ window.addEventListener("resize", () => {
   camera.top = height / 2;
   camera.bottom = height / -2;
 
-  /*
-  // If you are using perspective camera uncomment these three lines
-  camera.aspect = aspect;
-  camera.fov = (Math.atan(height / 2 / camera.position.z) * 360) / Math.PI;
-  */
-
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 window.addEventListener("click", () => {
-  if (gameEnded) {
-    startGame();
-  } else {
-    placeLayer();
-  }
+  if (autopilot) startGame();
+  else placeLayer();
 });
 
 window.addEventListener("keydown", (event) => {
   if (event.key == " ") {
-    if (gameEnded) {
-      startGame();
-    } else {
-      placeLayer();
-    }
+    if (autopilot) startGame();
+    else placeLayer();
   } else if (event.key.toLowerCase() == "r") {
     startGame();
   }
