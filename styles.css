@@ -36,7 +36,7 @@ body {
   
   #instructions {
     position: absolute;
-    bottom: 20px; /* Adjust this value as needed */
+    /* bottom: 20px; Adjust this value as needed */
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
