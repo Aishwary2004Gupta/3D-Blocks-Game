@@ -2,15 +2,36 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    background-color: #000;
+    /* background-color: #000; */
     color: white;
   }
   
   #score {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 60px;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  #bestScore {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .content {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: #ffffff;
+    font-size: 24px;
   }
   
   #instructions {
@@ -32,7 +53,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 30px;
+    font-size: 50px;
     font-weight: bold;
     font-style: italic;
     color: rgb(228, 21, 21);
