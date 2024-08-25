@@ -11,7 +11,9 @@ let autopilot = true; // Set autopilot to true initially so the game doesn't sta
 let gameEnded;
 let robotPrecision; // Determines how precise the game is on autopilot
 
+let bestScore = localStorage.getItem("bestScore") || 0;
 const scoreElement = document.getElementById("score");
+const bestScoreElement = document.getElementById("bestScore");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 
@@ -77,6 +79,9 @@ function init() {
 
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
+  
+  // Display the current best score
+  bestScoreElement.innerText = `Best Score: ${bestScore}`;
 }
 
 function startGame() {
@@ -239,66 +244,8 @@ function animation(time) {
 
     updatePhysics(timePassed);
     renderer.render(scene, camera);
-
-    if (instructionsElement) instructionsElement.style.display = "block";
   }
   lastTime = time;
-}
-
-// When the player missed the spot
-function missedTheSpot() {
-  const topLayer = stack[stack.length - 1];
-
-  // Stop the game
-  if (topLayer.threejs.position[topLayer.direction] > 10) {
-    gameEnded = true;
-    if (resultsElement) resultsElement.style.display = "flex";
-  }
-}
-
-// Set the top layer in place
-function placeLayer() {
-  const topLayer = stack[stack.length - 1];
-  const previousLayer = stack[stack.length - 2];
-
-  const direction = topLayer.direction;
-
-  const delta =
-    topLayer.threejs.position[direction] -
-    previousLayer.threejs.position[direction];
-  const overhangSize = Math.abs(delta);
-  const size = direction == "x" ? topLayer.width : topLayer.depth;
-  const overlap = size - overhangSize;
-
-  if (overlap > 0) {
-    cutBox(topLayer, overlap, size, delta);
-
-    // Overhang
-    const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta);
-    const overhangX =
-      direction == "x"
-        ? topLayer.threejs.position.x + overhangShift
-        : topLayer.threejs.position.x;
-    const overhangZ =
-      direction == "z"
-        ? topLayer.threejs.position.z + overhangShift
-        : topLayer.threejs.position.z;
-    const overhangWidth = direction == "x" ? overhangSize : topLayer.width;
-    const overhangDepth = direction == "z" ? overhangSize : topLayer.depth;
-
-    addOverhang(overhangX, overhangZ, overhangWidth, overhangDepth);
-
-    // Next layer
-    const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
-    const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
-    const newWidth = topLayer.width;
-    const newDepth = topLayer.depth;
-
-    if (scoreElement) scoreElement.innerText = stack.length - 1;
-    addLayer(nextX, nextZ, newWidth, newDepth, direction == "x" ? "z" : "x");
-  } else {
-    missedTheSpot();
-  }
 }
 
 function updatePhysics(timePassed) {
@@ -311,39 +258,113 @@ function updatePhysics(timePassed) {
   });
 }
 
-window.addEventListener("resize", () => {
-  const aspect = window.innerWidth / window.innerHeight;
-  const width = 10;
-  const height = width / aspect;
+// Whenever the player presses the space key or clicks with the mouse
+function placeLayer() {
+  if (autopilot) return;
 
-  camera.top = height / 2;
-  camera.bottom = height / -2;
+  const topLayer = stack[stack.length - 1];
+  const previousLayer = stack[stack.length - 2];
 
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+  const direction = topLayer.direction;
+
+  const size = direction == "x" ? topLayer.width : topLayer.depth;
+  const delta =
+    topLayer.threejs.position[direction] -
+    previousLayer.threejs.position[direction];
+  const overhangSize = Math.abs(delta);
+  const overlap = size - overhangSize;
+
+  if (overlap > 0) {
+    cutBox(topLayer, overlap, size, delta);
+
+    // Overhang
+    const overhangShift = (overlap / 2 + overhangSize / 2) * Math.sign(delta);
+    const overhangX = direction == "x" ? topLayer.threejs.position.x + overhangShift : topLayer.threejs.position.x;
+    const overhangZ = direction == "z" ? topLayer.threejs.position.z + overhangShift : topLayer.threejs.position.z;
+    const overhangWidth = direction == "x" ? overhangSize : topLayer.width;
+    const overhangDepth = direction == "z" ? overhangSize : topLayer.depth;
+
+    addOverhang(overhangX, overhangZ, overhangWidth, overhangDepth);
+
+    // Next layer
+    const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
+    const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
+    const newWidth = topLayer.width; // New layer has the same size as the cut top layer
+    const newDepth = topLayer.depth; // New layer has the same size as the cut top layer
+    const nextDirection = direction == "x" ? "z" : "x";
+
+    addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
+
+    // Update score
+    scoreElement.innerText = stack.length - 1;
+
+  } else {
+    missedTheSpot();
+  }
+}
 
 function missedTheSpot() {
   const topLayer = stack[stack.length - 1];
 
-  // Stop the game
-  if (topLayer.threejs.position[topLayer.direction] > 10) {
-    gameEnded = true;
-    if (resultsElement) resultsElement.style.display = "flex";
-    if (instructionsElement) instructionsElement.style.display = "block"; // Show instructions when game ends
+  // Turn the top layer into an overhang and let it fall down
+  addOverhang(
+    topLayer.threejs.position.x,
+    topLayer.threejs.position.z,
+    topLayer.width,
+    topLayer.depth
+  );
+  world.remove(topLayer.cannonjs);
+  scene.remove(topLayer.threejs);
+  stack.pop();
+
+  // Update best score if the current score is higher
+  const currentScore = stack.length - 1;
+  if (currentScore > bestScore) {
+    bestScore = currentScore;
+    localStorage.setItem("bestScore", bestScore);
+    bestScoreElement.innerText = `Best Score: ${bestScore}`;
   }
+
+  endGame();
 }
 
-window.addEventListener("click", () => {
-  if (autopilot || gameEnded) startGame();
-  else placeLayer();
-});
-
+// Handle keyboard inputs
 window.addEventListener("keydown", (event) => {
   if (event.key == " ") {
-    if (autopilot || gameEnded) startGame();
-    else placeLayer();
-  } else if (event.key.toLowerCase() == "r") {
+    if (autopilot) {
+      startGame();
+    } else {
+      placeLayer();
+    }
+  } else if (event.key == "r" || event.key == "R") {
     startGame();
+  } else if (event.key.toLowerCase() == "b") {
+    bestScore = 0;
+    localStorage.setItem("bestScore", bestScore);
+    bestScoreElement.innerText = `Best Score: ${bestScore}`;
   }
+});
+
+// Handle mouse clicks
+window.addEventListener("click", () => {
+  if (autopilot) {
+    startGame();
+  } else {
+    placeLayer();
+  }
+});
+
+window.addEventListener("resize", () => {
+  // Adjust camera and renderer to size
+  const aspect = window.innerWidth / window.innerHeight;
+  const width = 10;
+  const height = width / aspect;
+
+  camera.left = width / -2;
+  camera.right = width / 2;
+  camera.top = height / 2;
+  camera.bottom = height / -2;
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.updateProjectionMatrix();
 });
