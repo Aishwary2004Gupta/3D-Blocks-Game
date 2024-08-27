@@ -74,4 +74,3 @@ body {
   body.game-over #score, body.game-over #instructions {
     display: none;
   }
-  
