@@ -23,6 +23,15 @@ body {
     font-weight: bold;
     color: #ffffff;
   }
+
+  #resetScore {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+  }
   
   .content {
     position: absolute;
