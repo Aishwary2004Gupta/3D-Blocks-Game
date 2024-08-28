@@ -92,7 +92,7 @@ function startGame() {
   overhangs = [];
 
   // Hide instructions and results when the game starts
-  if (instructionsElement) instructionsElement.style.display = "none";
+  if (instructionsElement) instructionsElement.style.display = "none"; // Hide instructions
   if (resultsElement) resultsElement.style.display = "none";
   if (scoreElement) scoreElement.innerText = 0;
 
@@ -132,7 +132,7 @@ function endGame() {
   renderer.setAnimationLoop(null); // Stop the animation loop
 
   // Show instructions and results when the game ends
-  if (instructionsElement) instructionsElement.style.display = "block";
+  if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "block";
 }
 
