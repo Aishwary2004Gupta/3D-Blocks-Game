@@ -92,10 +92,10 @@ function startGame() {
   overhangs = [];
 
   // Hide instructions and results when the game starts
-  if (instructionsElement) instructionsElement.style.display = "none"; // Hide instructions
+  if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "none";
   const resetScoreElement = document.getElementById("resetScore");
-  if (resetScoreElement) resetScoreElement.style.display = "none"; 
+  if (resetScoreElement) resetScoreElement.style.display = "none";
   if (scoreElement) scoreElement.innerText = 0;
 
   if (world) {
@@ -134,9 +134,9 @@ function endGame() {
   renderer.setAnimationLoop(null); // Stop the animation loop
 
   // Show instructions and results when the game ends
-  if (instructionsElement) instructionsElement.style.display = "none";
-  const resetScoreElement = document.getElementById("resetScore");
   if (resultsElement) resultsElement.style.display = "block";
+  const resetScoreElement = document.getElementById("resetScore");
+  if (resetScoreElement) resetScoreElement.style.display = "block";
 }
 
 function addLayer(x, z, width, depth, direction, isInitial = false) {
