@@ -298,8 +298,9 @@ function placeLayer() {
 
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
 
-    // Update score
-    scoreElement.innerText = stack.length - 1;
+    // Update score correctly
+    const score = stack.length - 2;  // Subtract 2 to start counting from the first block placed by the player
+    scoreElement.innerText = score;
 
   } else {
     missedTheSpot();
