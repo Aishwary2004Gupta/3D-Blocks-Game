@@ -94,6 +94,8 @@ function startGame() {
   // Hide instructions and results when the game starts
   if (instructionsElement) instructionsElement.style.display = "none"; // Hide instructions
   if (resultsElement) resultsElement.style.display = "none";
+  const resetScoreElement = document.getElementById("resetScore");
+  if (resetScoreElement) resetScoreElement.style.display = "none"; 
   if (scoreElement) scoreElement.innerText = 0;
 
   if (world) {
@@ -133,6 +135,7 @@ function endGame() {
 
   // Show instructions and results when the game ends
   if (instructionsElement) instructionsElement.style.display = "none";
+  const resetScoreElement = document.getElementById("resetScore");
   if (resultsElement) resultsElement.style.display = "block";
 }
 
