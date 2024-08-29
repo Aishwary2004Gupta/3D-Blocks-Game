@@ -1,4 +1,4 @@
-window.focus(); // Capture keys right away (by default focus is on editor)
+window.focus(); // Capture keys right away 
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
