@@ -5,17 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stacking Game</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nerko+One&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="score">0</div>
-  <div id="bestScore">Best Score: 0</div> 
-  <div id="resetScore" style="display: none;">Press 'B' to reset the best score.</div>
-  <div id="instructions" class="content">
+  <div id="score" class="nerko-one-regular">0</div>
+  <div id="bestScore" class="nerko-one-regular">Best Score: 0</div> 
+  <div id="resetScore" class="nerko-one-regular" style="display: none;">Press 'B' to reset the best score.</div>
+  <div id="instructions" class="content nerko-one-regular">
     <p>Press <b><i>spacebar</i></b> to start the game</p>
   </div>
-  <div id="results" class="content" style="display: none;"> 
+  <div id="results" class="content nerko-one-regular" style="display: none;"> 
     <p>Game Over!</p>
-    <p>Press "R" to restart the game.</p>
+    <p>Press'R' to restart the game.</p>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
