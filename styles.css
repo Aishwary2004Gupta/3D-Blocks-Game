@@ -34,6 +34,10 @@ body {
   color: red;
 }
 
+.white-text{
+  color: white;
+}
+
 #resetScore {
   position: absolute;
   bottom: 10px;
