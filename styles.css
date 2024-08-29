@@ -29,6 +29,10 @@ body {
   font-style: normal;
 }
 
+.red-letter {
+  color: red;
+}
+
 #resetScore {
   position: absolute;
   bottom: 10px;
