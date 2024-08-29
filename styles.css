@@ -66,6 +66,11 @@ body {
   border-radius: 10px; /* Rounded corners */
 }
 
+.dela-gothic-one-regular {
+  font-family: "Dela Gothic One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
 #results {
   position: absolute;
