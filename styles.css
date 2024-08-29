@@ -23,9 +23,10 @@ body {
   color: #ffffff;
 }
 
-.matemasie-regular {
-  font-family: "Matemasie", sans-serif;
-  font-weight: 400;
+.bitter-reset-score {
+  font-family: "Bitter", serif;
+  font-optical-sizing: auto;
+  font-weight: 400; 
   font-style: normal;
 }
 
