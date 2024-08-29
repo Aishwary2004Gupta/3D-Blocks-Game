@@ -44,15 +44,17 @@ body {
 
 #instructions {
   position: absolute;
-  bottom: 20px; /* Adjust this value if you need more/less space at the bottom */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
-  padding: 0;
-  font-size: 30px; /* Increase the font size */
+  padding: 10px 20px; /* Add padding for better spacing around the text */
+  font-size: 30px;
   text-align: center;
-  background: none; /* Remove the background */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  border-radius: 10px; /* Rounded corners */
 }
+
 
 #results {
   position: absolute;
