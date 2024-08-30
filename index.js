@@ -211,7 +211,7 @@ function cutBox(topLayer, overlap, size, delta) {
 function animation(time) {
   if (lastTime) {
     const timePassed = time - lastTime;
-    const speed = 0.008;
+    const speed = 0.007;
 
     const topLayer = stack[stack.length - 1];
 
