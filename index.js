@@ -91,6 +91,9 @@ function startGame() {
   stack = [];
   overhangs = [];
 
+  // Disable scrolling when the game starts
+  disableScroll();
+
   // Hide instructions and results when the game starts
   if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "none";
@@ -132,6 +135,9 @@ function startGame() {
 function endGame() {
   gameEnded = true;
   renderer.setAnimationLoop(null); // Stop the animation loop
+
+  // Enable scrolling
+  enableScroll();
 
   // Show instructions and results when the game ends
   if (resultsElement) resultsElement.style.display = "block";
@@ -373,3 +379,41 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
 });
 
+function enableScroll() {
+  window.addEventListener("wheel", onScroll);
+  window.addEventListener("keydown", onArrowKey);
+}
+
+function disableScroll() {
+  window.removeEventListener("wheel", onScroll);
+  window.removeEventListener("keydown", onArrowKey);
+}
+
+function onScroll(event) {
+  if (!gameEnded) return;
+
+  // Adjust camera position based on scroll direction
+  const scrollAmount = event.deltaY * 0.05; // Adjust this multiplier to control scroll speed
+  camera.position.y -= scrollAmount;
+
+  // Restrict camera's vertical movement within reasonable bounds
+  camera.position.y = Math.max(4, Math.min(stack.length * boxHeight + 4, camera.position.y));
+
+  renderer.render(scene, camera);
+}
+
+function onArrowKey(event) {
+  if (!gameEnded) return;
+
+  let scrollAmount = 1; // Adjust the amount moved by arrow keys
+  if (event.key === "ArrowUp") {
+    camera.position.y += scrollAmount;
+  } else if (event.key === "ArrowDown") {
+    camera.position.y -= scrollAmount;
+  }
+
+  // Restrict camera's vertical movement within reasonable bounds
+  camera.position.y = Math.max(4, Math.min(stack.length * boxHeight + 4, camera.position.y));
+
+  renderer.render(scene, camera);
+}
