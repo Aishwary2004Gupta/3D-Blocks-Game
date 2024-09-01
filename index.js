@@ -232,7 +232,6 @@ function animation(time) {
         missedTheSpot();
       }
     } else {
-      // If it shouldn't move then is the player or autopilot that should place it
       // (if the game is not over)
       if (autopilot) {
         placeLayer();
