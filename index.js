@@ -145,17 +145,17 @@ function endGame() {
   if (resetScoreElement) resetScoreElement.style.display = "block";
 }
 
+function addOverhang(x, z, width, depth) {
+  const y = boxHeight * (stack.length - 1); // Add the new box one layer higher
+  const overhang = generateBox(x, y, z, width, depth, true);
+  overhangs.push(overhang);
+}
+
 function addLayer(x, z, width, depth, direction, isInitial = false) {
   const y = boxHeight * stack.length; // Add the new box one layer higher
   const layer = generateBox(x, y, z, width, depth, false, isInitial);
   layer.direction = direction;
   stack.push(layer);
-}
-
-function addOverhang(x, z, width, depth) {
-  const y = boxHeight * (stack.length - 1); // Add the new box one layer higher
-  const overhang = generateBox(x, y, z, width, depth, true);
-  overhangs.push(overhang);
 }
 
 // Create a box
