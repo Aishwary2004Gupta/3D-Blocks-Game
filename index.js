@@ -158,7 +158,7 @@ function addLayer(x, z, width, depth, direction, isInitial = false) {
   stack.push(layer);
 }
 
-// Create a box
+
 function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
