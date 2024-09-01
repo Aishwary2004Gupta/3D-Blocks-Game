@@ -292,8 +292,9 @@ function placeLayer() {
     // Next layer
     const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
     const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
-    const newWidth = topLayer.width; // New layer has the same size as the cut top layer
-    const newDepth = topLayer.depth; // New layer has the same size as the cut top layer
+    // New layer has the same size as the cut top layer
+    const newWidth = topLayer.width; 
+    const newDepth = topLayer.depth; 
     const nextDirection = direction == "x" ? "z" : "x";
 
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
