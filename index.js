@@ -299,7 +299,7 @@ function placeLayer() {
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
 
     // Update score correctly
-    const score = stack.length - 2;  // Subtract 2 to start counting from the first block placed by the player
+    const score = stack.length - 2;
     scoreElement.innerText = score;
 
   } else {
@@ -359,7 +359,7 @@ window.addEventListener("click", () => {
 });
 
 window.addEventListener("resize", () => {
-  // Adjust camera and renderer to size
+  
   const aspect = window.innerWidth / window.innerHeight;
   const width = 10;
   const height = width / aspect;
