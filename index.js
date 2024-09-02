@@ -137,7 +137,7 @@ function endGame() {
   renderer.setAnimationLoop(null); // Stop the animation loop
 
   // Enable scrolling
-  // enableScroll(); //not using this as of now (will be updated later)
+  enableScroll(); 
 
   // Show instructions and results when the game ends
   if (resultsElement) resultsElement.style.display = "block";
@@ -170,6 +170,12 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
   scene.add(mesh);
+
+  // Add black border
+  const edgesGeometry = new THREE.EdgesGeometry(geometry);
+  const edgesMaterial = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
+  const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+  mesh.add(edges);
 
   // CannonJS
   const shape = new CANNON.Box(
