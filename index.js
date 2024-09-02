@@ -137,7 +137,7 @@ function endGame() {
   renderer.setAnimationLoop(null); // Stop the animation loop
 
   // Enable scrolling
-  enableScroll();
+  // enableScroll(); //not using this as of now (will be updated later)
 
   // Show instructions and results when the game ends
   if (resultsElement) resultsElement.style.display = "block";
