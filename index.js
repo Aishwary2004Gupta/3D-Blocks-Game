@@ -164,7 +164,7 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
   // Set color based on whether it's the initial block
-  const color = new THREE.Color(`hsl(${150 + stack.length * 8}, 100%, 50%)`);  
+  const color = new THREE.Color(`hsl(${150 + stack.length * 6}, 100%, 50%)`);  
   const material = new THREE.MeshLambertMaterial({ color });
 
   const mesh = new THREE.Mesh(geometry, material);
