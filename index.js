@@ -274,7 +274,7 @@ function updatePhysics(timePassed) {
 
 // Whenever the player presses the space key or clicks with the mouse
 function placeLayer() {
-  if (autopilot) return;
+  if (autopilot || gameEnded) return;
 
   const topLayer = stack[stack.length - 1];
   const previousLayer = stack[stack.length - 2];
