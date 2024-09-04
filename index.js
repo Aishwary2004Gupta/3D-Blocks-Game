@@ -136,36 +136,14 @@ function endGame() {
   gameEnded = true;
   renderer.setAnimationLoop(null); // Stop the animation loop
 
-  const targetPosition = { x: 10, y: 10, z: 10 }; // Target position for the camera
-  const initialPosition = { ...camera.position };
-  const zoomOutDuration = 1000; // Duration in milliseconds
-  const startTime = performance.now();
+  // Enable scrolling
+  enableScroll(); 
 
-  function zoomOutAnimation(time) {
-      const elapsedTime = time - startTime;
-      const progress = Math.min(elapsedTime / zoomOutDuration, 1);
-
-      // Interpolate between the initial and target positions
-      camera.position.x = initialPosition.x + (targetPosition.x - initialPosition.x) * progress;
-      camera.position.y = initialPosition.y + (targetPosition.y - initialPosition.y) * progress;
-      camera.position.z = initialPosition.z + (targetPosition.z - initialPosition.z) * progress;
-
-      camera.lookAt(0, 0, 0); // Keep the camera focused on the center
-      renderer.render(scene, camera);
-
-      if (progress < 1) {
-          requestAnimationFrame(zoomOutAnimation);
-      } else {
-          // Show results and reset score options once zoom is complete
-          if (resultsElement) resultsElement.style.display = "block";
-          const resetScoreElement = document.getElementById("resetScore");
-          if (resetScoreElement) resetScoreElement.style.display = "block";
-      }
-  }
-
-  requestAnimationFrame(zoomOutAnimation);
+  // Show instructions and results when the game ends
+  if (resultsElement) resultsElement.style.display = "block";
+  const resetScoreElement = document.getElementById("resetScore");
+  if (resetScoreElement) resetScoreElement.style.display = "block";
 }
-
 
 function addOverhang(x, z, width, depth) {
   const y = boxHeight * (stack.length - 1); // Add the new box one layer higher
