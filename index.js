@@ -312,21 +312,25 @@ function placeLayer() {
     // Next layer
     const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
     const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
-    // New layer has the same size as the cut top layer
     const newWidth = topLayer.width; 
     const newDepth = topLayer.depth; 
     const nextDirection = direction == "x" ? "z" : "x";
 
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
 
-    // Update score correctly
+    // Update score
     const score = stack.length - 2;
     scoreElement.innerText = score;
+
+    // Play the stack sound
+    const stackSound = document.getElementById("stackSound");
+    stackSound.play(); // Trigger the sound
 
   } else {
     missedTheSpot();
   }
 }
+
 
 function missedTheSpot() {
   const topLayer = stack[stack.length - 1];
