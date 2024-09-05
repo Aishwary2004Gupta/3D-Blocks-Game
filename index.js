@@ -101,6 +101,10 @@ function startGame() {
   if (resetScoreElement) resetScoreElement.style.display = "none";
   if (scoreElement) scoreElement.innerText = 0;
 
+  // Hide the scroll message
+  const scrollMessage = document.getElementById("scrollMessage");
+  if (scrollMessage) scrollMessage.style.display = "none";
+
   if (world) {
     // Remove every object from world
     while (world.bodies.length > 0) {
@@ -143,7 +147,12 @@ function endGame() {
   if (resultsElement) resultsElement.style.display = "block";
   const resetScoreElement = document.getElementById("resetScore");
   if (resetScoreElement) resetScoreElement.style.display = "block";
+
+  // Show the scroll message
+  const scrollMessage = document.getElementById("scrollMessage");
+  if (scrollMessage) scrollMessage.style.display = "block";
 }
+
 
 function addOverhang(x, z, width, depth) {
   const y = boxHeight * (stack.length - 1); // Add the new box one layer higher
