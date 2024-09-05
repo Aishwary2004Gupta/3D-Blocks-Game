@@ -5,8 +5,8 @@ let world; // CannonJs world
 let lastTime; // Last timestamp of animation
 let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
-const boxHeight = 1; // Height of each layer
-const originalBoxSize = 3; // Original width and height of a box
+const boxHeight = 0.8; // Height of each layer
+const originalBoxSize = 2.8; // Original width and height of a box
 let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
 let robotPrecision; // Determines how precise the game is on autopilot
