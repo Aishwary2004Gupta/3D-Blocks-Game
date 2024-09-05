@@ -164,7 +164,7 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
   // Set color based on whether it's the initial block
-  const color = new THREE.Color(`hsl(${150 + stack.length * 6}, 100%, 50%)`);  
+  const color = new THREE.Color(`hsl(${150 + stack.length * 5}, 100%, 50%)`);  
   const material = new THREE.MeshLambertMaterial({ color });
 
   const mesh = new THREE.Mesh(geometry, material);
@@ -223,7 +223,7 @@ function cutBox(topLayer, overlap, size, delta) {
 function animation(time) {
   if (lastTime) {
     const timePassed = time - lastTime;
-    const speed = 0.007;
+    const speed = 0.006;
 
     const topLayer = stack[stack.length - 1];
 
