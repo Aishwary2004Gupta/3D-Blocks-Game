@@ -117,6 +117,24 @@ body.game-over #score, body.game-over #instructions {
   font-style: normal;
 }
 
+.credits {
+  position: absolute;
+  bottom: 20px; 
+  left: 20px;  
+  z-index: 2; 
+  font-size: 1.3em;
+  color: #000;
+}
+
+.credits a {
+  color: #f0e9e9;
+  text-decoration: none;
+}
+
+.credits a:hover {
+  text-decoration: underline;
+}
+
 #scrollMessage {
   display: none;
   position: absolute;
