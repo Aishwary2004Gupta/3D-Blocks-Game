@@ -17,11 +17,11 @@ const bestScoreElement = document.getElementById("bestScore");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 
-// Call this function during initialization or when the game starts
-function init() {
-  // Other initialization code...
-  createBestScoreLine();  // Create the best score line
-}
+// // Call this function during initialization or when the game starts
+// function init() {
+//   // Other initialization code...
+//   createBestScoreLine();  // Create the best score line
+// }
 
 init();
 
