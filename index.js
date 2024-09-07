@@ -353,6 +353,7 @@ function placeLayer() {
 
 function missedTheSpot() {
   const topLayer = stack[stack.length - 1];
+  const currentScore = stack.length - 2;
 
   // Turn the top layer into an overhang and let it fall down
   addOverhang(
@@ -366,11 +367,15 @@ function missedTheSpot() {
   stack.pop();
 
   // Update best score if the current score is higher
-  const currentScore = stack.length - 1;
+  
   if (currentScore > bestScore) {
     bestScore = currentScore;
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
+    // Update the best score line
+    updateBestScoreLine();
+    // Show confetti
+    showConfetti();
   }
 
   endGame();
@@ -474,23 +479,23 @@ function showConfetti() {
   });
 }
 
-// Update this part of your `missedTheSpot` function or where you check the best score
-function missedTheSpot() {
-  const topLayer = stack[stack.length - 1];
-  const currentScore = stack.length - 1;
+// // Update this part of your `missedTheSpot` function or where you check the best score
+// function missedTheSpot() {
+//   // const topLayer = stack[stack.length - 1];
+//   const currentScore = stack.length - 2;
 
-  // If new best score is achieved, update the best score and show confetti
-  if (currentScore > bestScore) {
-    bestScore = currentScore;
-    localStorage.setItem("bestScore", bestScore);
-    bestScoreElement.innerText = `Best Score: ${bestScore}`;
+//   // If new best score is achieved, update the best score and show confetti
+//   if (currentScore > bestScore) {
+//     bestScore = currentScore;
+//     localStorage.setItem("bestScore", bestScore);
+//     bestScoreElement.innerText = `Best Score: ${bestScore}`;
 
-    // Update the best score line
-    updateBestScoreLine();
+//     // Update the best score line
+//     updateBestScoreLine();
 
-    // Show confetti
-    showConfetti();
-  }
+//     // Show confetti
+//     showConfetti();
+//   }
 
-  endGame();
-}
+//   endGame();
+// }
