@@ -90,17 +90,16 @@ function startGame() {
   stack = [];
   overhangs = [];
 
-  // Disable scrolling when the game starts
   disableScroll();
 
-  // Hide instructions and results when the game starts
+  // Hide instructions and results
   if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "none";
   const resetScoreElement = document.getElementById("resetScore");
   if (resetScoreElement) resetScoreElement.style.display = "none";
   if (scoreElement) scoreElement.innerText = 0;
 
-  // Hide the scroll message
+  // hide scroll message
   const scrollMessage = document.getElementById("scrollMessage");
   if (scrollMessage) scrollMessage.style.display = "none";
 
@@ -118,7 +117,7 @@ function startGame() {
       scene.remove(mesh);
     }
 
-    // Foundation (initial block with light red color)
+    // Foundation
     addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
 
     // First layer
@@ -139,7 +138,6 @@ function endGame() {
   gameEnded = true;
   renderer.setAnimationLoop(null); // Stop the animation loop
 
-  // Enable scrolling
   enableScroll(); 
 
   // Show instructions and results when the game ends
@@ -147,7 +145,7 @@ function endGame() {
   const resetScoreElement = document.getElementById("resetScore");
   if (resetScoreElement) resetScoreElement.style.display = "block";
 
-  // Show the scroll message
+  // scroll message
   const scrollMessage = document.getElementById("scrollMessage");
   if (scrollMessage) scrollMessage.style.display = "block";
 }
