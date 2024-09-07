@@ -9,7 +9,7 @@ const boxHeight = 0.8;
 const originalBoxSize = 2.8; 
 let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
-let robotPrecision; // Determines how precise the game is on autopilot
+let robotPrecision; 
 
 let bestScore = localStorage.getItem("bestScore") || 0;
 const scoreElement = document.getElementById("score");
