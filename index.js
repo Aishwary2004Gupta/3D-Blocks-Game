@@ -399,15 +399,6 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
-// Handle mouse clicks
-// window.addEventListener("click", () => {
-//   if (autopilot) {
-//     startGame();
-//   } else {
-//     placeLayer();
-//   }
-// });
-
 window.addEventListener("resize", () => {
   
   const aspect = window.innerWidth / window.innerHeight;
