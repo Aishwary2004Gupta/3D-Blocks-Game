@@ -23,7 +23,6 @@ function init() {
   createBestScoreLine();  // Create the best score line
 }
 
-
 init();
 
 function setRobotPrecision() {
