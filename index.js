@@ -61,7 +61,7 @@ function init() {
   // First layer
   addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
 
-  // Set up lights
+  // lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(ambientLight);
 
@@ -69,18 +69,17 @@ function init() {
   dirLight.position.set(10, 20, 0);
   scene.add(dirLight);
 
-  // Set up renderer
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Render the initial scene
+  // initial scene
   renderer.render(scene, camera);
 
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
   
-  // Display the current best score
+  // current best score
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
 }
 
