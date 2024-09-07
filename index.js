@@ -17,18 +17,6 @@ const bestScoreElement = document.getElementById("bestScore");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
 
-let bestScoreLine; // To store the best score line
-
-function createBestScoreLine() {
-  const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-  const points = [];
-  points.push(new THREE.Vector3(-5, boxHeight * bestScore, 0)); // Line starting point
-  points.push(new THREE.Vector3(5, boxHeight * bestScore, 0));  // Line ending point
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  bestScoreLine = new THREE.Line(geometry, material);
-  scene.add(bestScoreLine);
-}
-
 // Call this function during initialization or when the game starts
 function init() {
   // Other initialization code...
@@ -372,8 +360,6 @@ function missedTheSpot() {
     bestScore = currentScore;
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
-    // Update the best score line
-    updateBestScoreLine();
     // Show confetti
     showConfetti();
   }
@@ -395,7 +381,6 @@ window.addEventListener("keydown", (event) => {
     bestScore = 0;
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
-    updateBestScoreLine();  // Move the line back to the new best score (which is 0 now)
   }
 });
 
