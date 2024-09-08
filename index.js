@@ -92,7 +92,7 @@ function addTransparentFloor() {
   
   // ThreeJS
   const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
-  const material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+  const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
   floor = new THREE.Mesh(geometry, material);
   floor.position.set(0, -floorHeight / 2, 0);
   scene.add(floor);
