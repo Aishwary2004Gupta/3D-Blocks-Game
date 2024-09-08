@@ -89,18 +89,19 @@ function init() {
 function addTransparentFloor() {
   const floorSize = 20;
   const floorHeight = 0.2;
+  const floorPosition = -1; // Adjust this value to move the floor lower
   
   // ThreeJS
   const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
   const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
   floor = new THREE.Mesh(geometry, material);
-  floor.position.set(0, -floorHeight / 2, 0);
+  floor.position.set(0, floorPosition, 0);
   scene.add(floor);
 
   // CannonJS
   const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, floorHeight / 2, floorSize / 2));
   const body = new CANNON.Body({ mass: 0, shape: shape });
-  body.position.set(0, -floorHeight / 2, 0);
+  body.position.set(0, floorPosition, 0);
   world.addBody(body);
 }
 
