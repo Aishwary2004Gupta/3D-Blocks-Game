@@ -10,6 +10,7 @@ const originalBoxSize = 2.8;
 let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
 let robotPrecision; 
+let floor;
 
 let bestScore = localStorage.getItem("bestScore") || 0;
 const scoreElement = document.getElementById("score");
@@ -76,11 +77,31 @@ function init() {
   // initial scene
   renderer.render(scene, camera);
 
+  addTransparentFloor();
+
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
   
   // current best score
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
+}
+
+function addTransparentFloor() {
+  const floorSize = 20;
+  const floorHeight = 0.2;
+  
+  // ThreeJS
+  const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
+  const material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+  floor = new THREE.Mesh(geometry, material);
+  floor.position.set(0, -floorHeight / 2, 0);
+  scene.add(floor);
+
+  // CannonJS
+  const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, floorHeight / 2, floorSize / 2));
+  const body = new CANNON.Body({ mass: 0, shape: shape });
+  body.position.set(0, -floorHeight / 2, 0);
+  world.addBody(body);
 }
 
 function startGame() {
@@ -108,13 +129,20 @@ function startGame() {
     while (world.bodies.length > 0) {
       world.remove(world.bodies[0]);
     }
+    // Recreate the world
+    world = new CANNON.World();
+    world.gravity.set(0, -10, 0);
+    world.broadphase = new CANNON.NaiveBroadphase();
+    world.solver.iterations = 40;
   }
 
   if (scene) {
     // Remove every Mesh from the scene
-    while (scene.children.find((c) => c.type == "Mesh")) {
-      const mesh = scene.children.find((c) => c.type == "Mesh");
-      scene.remove(mesh);
+    for (let i = scene.children.length - 1; i >= 0; i--) {
+      const child = scene.children[i];
+      if (child.type === "Mesh" && child !== floor) {
+        scene.remove(child);
+      }
     }
 
     // Foundation
@@ -123,6 +151,7 @@ function startGame() {
     // First layer
     addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
   }
+  addTransparentFloor();
 
   if (camera) {
     // Reset camera positions
