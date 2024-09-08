@@ -1,5 +1,11 @@
 window.focus(); 
 
+// Add these new event listeners after the existing keyboard event listener
+window.addEventListener("touchstart", handleTouchStart);
+window.addEventListener("touchend", handleTouchEnd);
+
+let touchStartTime;
+
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
 let lastTime; 
@@ -17,6 +23,24 @@ const scoreElement = document.getElementById("score");
 const bestScoreElement = document.getElementById("bestScore");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
+
+function handleTouchStart(event) {
+  touchStartTime = new Date().getTime();
+}
+
+function handleTouchEnd(event) {
+  const touchEndTime = new Date().getTime();
+  const touchDuration = touchEndTime - touchStartTime;
+
+  // Prevent accidental touches
+  if (touchDuration < 300) {
+    if (autopilot) {
+      startGame();
+    } else {
+      placeLayer();
+    }
+  }
+}
 
 init();
 
@@ -388,8 +412,10 @@ function missedTheSpot() {
 }
 
 // Handle keyboard inputs
-window.addEventListener("keydown", (event) => {
-  if (event.key == " ") {
+window.addEventListener("keydown", handleInput);
+
+function handleInput(event) {
+  if (event.key == " " || event.type == "touchend") {
     if (autopilot) {
       startGame();
     } else {
@@ -402,7 +428,7 @@ window.addEventListener("keydown", (event) => {
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
   }
-});
+}
 
 window.addEventListener("resize", () => {
   
@@ -422,11 +448,29 @@ window.addEventListener("resize", () => {
 function enableScroll() {
   window.addEventListener("wheel", onScroll);
   window.addEventListener("keydown", onArrowKey);
+  window.addEventListener("touchmove", onTouchMove, { passive: false });
 }
 
 function disableScroll() {
   window.removeEventListener("wheel", onScroll);
   window.removeEventListener("keydown", onArrowKey);
+  window.removeEventListener("touchmove", onTouchMove);
+}
+
+function onTouchMove(event) {
+  if (!gameEnded) {
+    event.preventDefault();
+    return;
+  }
+
+  const touch = event.touches[0];
+  const moveAmount = (touch.pageY - touch.target.offsetTop) * 0.05;
+  camera.position.y -= moveAmount;
+
+  // Restrict camera's vertical movement within reasonable bounds
+  camera.position.y = Math.max(4, Math.min(stack.length * boxHeight + 4, camera.position.y));
+
+  renderer.render(scene, camera);
 }
 
 function onScroll(event) {
