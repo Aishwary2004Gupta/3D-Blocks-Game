@@ -514,7 +514,7 @@ function updateBestScoreLine() {
 function showConfetti() {
   confetti({
     particleCount: 100,
-    spread: 70,
+    spread: 100,
     origin: { y: 0.6 }
   });
 }
