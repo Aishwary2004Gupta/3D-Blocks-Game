@@ -513,8 +513,13 @@ function updateBestScoreLine() {
 
 function showConfetti() {
   confetti({
-    particleCount: 100,
-    spread: 100,
-    origin: { y: 0.6 }
+    particleCount: 200,
+    spread: 160,
+    origin: { y: 0.6 },
+    colors: ['#FFD700', '#FFA500', '#FF4500', '#00FF00', '#1E90FF'],
+    ticks: 300,
+    gravity: 0.8,
+    shapes: ['circle', 'square'],
+    zIndex: 9999
   });
 }
