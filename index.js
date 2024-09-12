@@ -1,6 +1,5 @@
 window.focus(); 
 
-// Add these new event listeners after the existing keyboard event listener
 window.addEventListener("touchstart", handleTouchStart);
 window.addEventListener("touchend", handleTouchEnd);
 
