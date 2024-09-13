@@ -222,15 +222,16 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
 
-  // Set color based on whether it's the initial block
-  const color = new THREE.Color(`hsl(${170 + stack.length * 7}, 100%, 50%)`);  
-  const material = new THREE.MeshLambertMaterial({ color });
-
+  // Set block color (use HSL color for easy manipulation)
+  const blockHue = (170 + stack.length * 7) % 360; // Cycle through hues for the blocks
+  const blockColor = new THREE.Color(`hsl(${blockHue}, 100%, 50%)`);
+  
+  const material = new THREE.MeshLambertMaterial({ color: blockColor });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
   scene.add(mesh);
 
-  // Add black border
+  // Add black border for visibility
   const edgesGeometry = new THREE.EdgesGeometry(geometry);
   const edgesMaterial = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 2 });
   const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
@@ -247,12 +248,24 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   body.position.set(x, y, z);
   world.addBody(body);
 
+  // Update the background color based on the block color
+  updateBackgroundColor(blockHue);
+
   return {
     threejs: mesh,
     cannonjs: body,
     width,
     depth,
   };
+}
+
+function updateBackgroundColor(blockHue) {
+  // Use a contrasting light color based on the block's hue
+  const backgroundHue = (blockHue + 180) % 360; // Contrasting hue
+  const backgroundColor = new THREE.Color(`hsl(${backgroundHue}, 50%, 85%)`); // Light background for contrast
+
+  // Apply the background color to the scene
+  scene.background = backgroundColor;
 }
 
 function cutBox(topLayer, overlap, size, delta) {
