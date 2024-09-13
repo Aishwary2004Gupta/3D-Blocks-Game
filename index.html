@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Stacking Game</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,38 +14,38 @@
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
 </head>
 <body>
-  
-  <div id="score" class="nerko-one-regular">0</div>
-  <div id="bestScore" class="nerko-one-regular">Best Score: 0</div> 
+  <div id="game-container">
+    <div id="score" class="nerko-one-regular">0</div>
+    <div id="bestScore" class="nerko-one-regular">Best Score: 0</div> 
 
-  <div id="resetScore" class="bitter-reset-score" style="display: none;">
-    Press '<span class="red-letter">B</span>' to reset the best score.
-  </div> 
+    <div id="resetScore" class="bitter-reset-score" style="display: none;">
+      Press '<span class="red-letter">B</span>' to reset the best score.
+    </div> 
 
-  <div id="instructions" class="content nerko-one-regular">
-    <p>Press <b><i>spacebar</i></b> to start the game</p>
+    <div id="instructions" class="content nerko-one-regular">
+      <p>Press <b><i>spacebar</i></b> to start the game</p>
+    </div>
+
+    <div id="results" class="content caveat-restart" style="display: none;"> 
+      <span class="dela-gothic-one-regular">Game Over!</span>
+      </p><span class="white-text">Press '<span class="red-letter">R</span>' to restart the game.</span>
+    </div>
+
+    <div id="scrollMessage"> 
+      Scroll or use arrow keys to view the tower!
+    </div>
+
+    <audio id="stackSound">
+      <source src="sound.wav" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>  
+
+    <div class="credits">
+      <a href="https://github.com/Aishwary2004Gupta" target="_blank">Made by Aishwary Gupta</a>
+    </div>
   </div>
-
-  <div id="results" class="content caveat-restart" style="display: none;"> 
-    <span class="dela-gothic-one-regular">Game Over!</span>
-    </p><span class="white-text">Press '<span class="red-letter">R</span>' to restart the game.</span>
-  </div>
-
-  <div id="scrollMessage"> 
-    Scroll or use arrow keys to view the tower!
-  </div>
-
-  <audio id="stackSound">
-    <source src="sound.wav" type="audio/mp3">
-      Your browser does not support the audio element.
-  </audio>  
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
-
-  <div class="credits">
-    <a href="https://github.com/Aishwary2004Gupta" target="_blank">Made by Aishwary Gupta</a>
-  </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
   <script src="index.js"></script>
