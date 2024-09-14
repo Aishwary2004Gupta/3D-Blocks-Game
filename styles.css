@@ -12,6 +12,11 @@ body {
   font-size: 80px;
   font-weight: bold;
   color: #ffffff;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 #bestScore {
@@ -21,6 +26,11 @@ body {
   font-size: 28px;
   font-weight: bold;
   color: #ffffff;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .bitter-reset-score {
@@ -45,6 +55,11 @@ body {
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .content {
@@ -55,6 +70,11 @@ body {
   text-align: center;
   color: #ffffff;
   font-size: 24px;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 #instructions {
@@ -124,6 +144,11 @@ body.game-over #score, body.game-over #instructions {
   z-index: 2; 
   font-size: 1.3em;
   color: #000;
+  text-shadow: 
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .credits a {
