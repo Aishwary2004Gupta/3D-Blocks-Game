@@ -97,11 +97,11 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // initial scene
-  renderer.render(scene, camera);
-
   addTransparentFloor();
 
+  // initial scene
+  renderer.render(scene, camera);
+  
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
   
@@ -110,13 +110,21 @@ function init() {
 }
 
 function addTransparentFloor() {
-  const floorSize = 20;
+  const floorSize = 10;
   const floorHeight = 0.2;
-  const floorPosition = -5; // Adjust to move the floor lower
+  const floorPosition = -0.5; // Adjust to move the floor lower
   
   // ThreeJS
   const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
-  const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 });
+  
+  // Add a semi-transparent colored material
+  const material = new THREE.MeshBasicMaterial({ 
+    color: 0x0000, // Example color (green)
+    transparent: true, 
+    opacity: 0.5 // Adjust the opacity to your liking
+  });
+  
+  // Create and position the floor mesh
   floor = new THREE.Mesh(geometry, material);
   floor.position.set(0, floorPosition, 0);
   scene.add(floor);
