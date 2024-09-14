@@ -114,9 +114,9 @@ function addTransparentFloor() {
   // Check if clouds have already been added
   if (cloudsAdded) return; // Exit the function if clouds are already added
 
-  const floorSize = originalBoxSize * 2;
-  const floorHeight = 1;
-  const floorPosition = -1;
+  const floorSize = originalBoxSize * 2.3;
+  const floorHeight = -0.9;
+  const floorPosition = -1.2;
 
   // Create a cloud-like shape
   const cloudGeometry = new THREE.SphereGeometry(floorSize / 6, 32, 32);
@@ -130,7 +130,7 @@ function addTransparentFloor() {
 
   // Create cloud puffs
   const cloudGroup = new THREE.Group();
-  const numPuffs = 6; // Fixed number of large cloud puffs
+  const numPuffs = 7; // Fixed number of large cloud puffs
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
