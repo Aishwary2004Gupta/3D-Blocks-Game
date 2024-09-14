@@ -95,7 +95,7 @@ body {
 .caveat-restart {
   font-family: "Caveat", cursive;
   font-optical-sizing: auto;
-  font-weight: 700; /* You can adjust the weight between 400 and 700 */
+  font-weight: 700;
   font-style: normal;
 }
 
