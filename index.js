@@ -101,7 +101,7 @@ function init() {
 
   // initial scene
   renderer.render(scene, camera);
-  
+
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
   
@@ -110,7 +110,7 @@ function init() {
 }
 
 function addTransparentFloor() {
-  const floorSize = 10;
+  const floorSize = 20;
   const floorHeight = 0.2;
   const floorPosition = -0.5; // Adjust to move the floor lower
   
@@ -119,9 +119,8 @@ function addTransparentFloor() {
   
   // Add a semi-transparent colored material
   const material = new THREE.MeshBasicMaterial({ 
-    color: 0x0000, // Example color (green)
     transparent: true, 
-    opacity: 0.5 // Adjust the opacity to your liking
+    opacity: 0// Adjust the opacity to your liking
   });
   
   // Create and position the floor mesh
