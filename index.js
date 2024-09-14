@@ -267,9 +267,8 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
 }
 
 function updateBackgroundColor(blockHue) {
-  // Use a contrasting light color based on the block's hue
-  const backgroundHue = (blockHue + 180) % 360; // Contrasting hue
-  const backgroundColor = new THREE.Color(`hsl(${backgroundHue}, 50%, 85%)`); // Light background for contrast
+  // Use the same hue as the block, but make it lighter
+  const backgroundColor = new THREE.Color(`hsl(${blockHue}, 50%, 80%)`);
 
   // Apply the background color to the scene
   scene.background = backgroundColor;
