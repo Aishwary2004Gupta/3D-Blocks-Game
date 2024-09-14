@@ -138,11 +138,12 @@ body.game-over #score, body.game-over #instructions {
 }
 
 .credits {
+  font-family: "Dela Gothic One", sans-serif;
   position: absolute;
   bottom: 20px; 
   left: 20px;  
   z-index: 2; 
-  font-size: 1.3em;
+  font-size: 1em;
   color: #000;
   text-shadow: 
     -1px -1px 0 #000,
