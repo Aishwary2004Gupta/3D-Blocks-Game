@@ -112,7 +112,7 @@ function init() {
 function addTransparentFloor() {
   const floorSize = 20;
   const floorHeight = 0.2;
-  const floorPosition = -0.9; // Adjust to move the floor lower
+  const floorPosition = -5; // Adjust to move the floor lower
   
   // ThreeJS
   const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
