@@ -534,7 +534,7 @@ function showConfetti() {
     particleCount: 200,
     spread: 160,
     origin: { y: 0.6 },
-    colors: ['#FFD700', '#FFA500', '#FF4500', '#00FF00', '#1E90FF'],
+    colors: ['#DAA520', '#FF8C00', '#DC143C', '#008000', '#4169E1'],
     ticks: 300,
     gravity: 0.8,
     shapes: ['circle', 'square'],
