@@ -4,6 +4,7 @@ window.addEventListener("touchstart", handleTouchStart);
 window.addEventListener("touchend", handleTouchEnd);
 
 let touchStartTime;
+let cloudsAdded = false;
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
@@ -110,29 +111,60 @@ function init() {
 }
 
 function addTransparentFloor() {
-  const floorSize = 20;
-  const floorHeight = 0.2;
-  const floorPosition = -0.5; // Adjust to move the floor lower
-  
-  // ThreeJS
-  const geometry = new THREE.BoxGeometry(floorSize, floorHeight, floorSize);
-  
-  // Add a semi-transparent colored material
-  const material = new THREE.MeshBasicMaterial({ 
-    transparent: true, 
-    opacity: 0// Adjust the opacity to your liking
-  });
-  
-  // Create and position the floor mesh
-  floor = new THREE.Mesh(geometry, material);
-  floor.position.set(0, floorPosition, 0);
-  scene.add(floor);
+  // Check if clouds have already been added
+  if (cloudsAdded) return; // Exit the function if clouds are already added
 
-  // CannonJS
-  const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, floorHeight / 2, floorSize / 2));
+  const floorSize = originalBoxSize * 2;
+  const floorHeight = 1;
+  const floorPosition = -1;
+
+  // Create a cloud-like shape
+  const cloudGeometry = new THREE.SphereGeometry(floorSize / 6, 32, 32);
+  const cloudMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    emissive: 0xffffff,
+    emissiveIntensity: 0.2,
+    transparent: true,
+    opacity: 0.8
+  });
+
+  // Create cloud puffs
+  const cloudGroup = new THREE.Group();
+  const numPuffs = 6; // Fixed number of large cloud puffs
+
+  for (let i = 0; i < numPuffs; i++) {
+    const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
+    
+    // Position clouds in a circular pattern
+    const angle = (i / numPuffs) * Math.PI * 2;
+    const radius = floorSize / 3 * (0.8 + Math.random() * 0.4);
+    cloudPuff.position.set(
+      Math.cos(angle) * radius,
+      (Math.random() - 0.5) * floorHeight * 0.5,
+      Math.sin(angle) * radius
+    );
+    
+    // Larger scale for each puff
+    const puffScale = 1.5 + Math.random() * 0.5;
+    cloudPuff.scale.set(puffScale, puffScale * 0.6, puffScale);
+    
+    cloudGroup.add(cloudPuff);
+  }
+
+  cloudGroup.position.set(0, floorPosition, 0);
+  scene.add(cloudGroup);
+
+  // CannonJS (invisible physics floor)
+  const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, 0.1, floorSize / 2));
   const body = new CANNON.Body({ mass: 0, shape: shape });
-  body.position.set(0, floorPosition, 0);
+  body.position.set(0, floorPosition - 0.5, 0);
   world.addBody(body);
+
+  // Store the cloud group for potential future updates
+  floor = cloudGroup;
+
+  // Mark clouds as added
+  cloudsAdded = true;
 }
 
 function startGame() {
