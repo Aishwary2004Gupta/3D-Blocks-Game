@@ -137,7 +137,7 @@ body.game-over #score, body.game-over #instructions {
   font-style: normal;
 }
 
-.credits {
+/* .credits {
   font-family: "Dela Gothic One", sans-serif;
   position: absolute;
   bottom: 20px; 
@@ -159,7 +159,7 @@ body.game-over #score, body.game-over #instructions {
 
 .credits a:hover {
   text-decoration: underline;
-}
+} */
 
 #scrollMessage {
   display: none;
