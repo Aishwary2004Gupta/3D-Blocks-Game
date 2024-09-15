@@ -131,13 +131,13 @@ function addTransparentFloor() {
 
   // Create cloud puffs
   cloudGroup = new THREE.Group(); // Use the global cloudGroup variable
-  const numPuffs = 7;
+  const numPuffs = 20;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
     
     const angle = (i / numPuffs) * Math.PI * 2;
-    const radius = floorSize / 3 * (0.8 + Math.random() * 0.4);
+    const radius = floorSize / 3 * (Math.random() * 2);
     cloudPuff.position.set(
       Math.cos(angle) * radius,
       (Math.random() - 0.5) * floorHeight * 0.5,
