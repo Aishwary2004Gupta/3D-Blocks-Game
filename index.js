@@ -5,6 +5,7 @@ window.addEventListener("touchend", handleTouchEnd);
 
 let touchStartTime;
 let cloudsAdded = false;
+let cloudGroup;
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
@@ -129,13 +130,12 @@ function addTransparentFloor() {
   });
 
   // Create cloud puffs
-  const cloudGroup = new THREE.Group();
-  const numPuffs = 7; // Fixed number of large cloud puffs
+  cloudGroup = new THREE.Group(); // Use the global cloudGroup variable
+  const numPuffs = 7;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
     
-    // Position clouds in a circular pattern
     const angle = (i / numPuffs) * Math.PI * 2;
     const radius = floorSize / 3 * (0.8 + Math.random() * 0.4);
     cloudPuff.position.set(
@@ -144,9 +144,11 @@ function addTransparentFloor() {
       Math.sin(angle) * radius
     );
     
-    // Larger scale for each puff
     const puffScale = 1.5 + Math.random() * 0.5;
     cloudPuff.scale.set(puffScale, puffScale * 0.6, puffScale);
+    
+    // Store the initial radius for later use in animation
+    cloudPuff.userData.initialRadius = radius;
     
     cloudGroup.add(cloudPuff);
   }
@@ -165,6 +167,20 @@ function addTransparentFloor() {
 
   // Mark clouds as added
   cloudsAdded = true;
+}
+
+function animateClouds(time) {
+  if (cloudGroup) {
+    cloudGroup.rotation.y = time * 0.0001; // Slow, constant rotation
+    
+    // Rotate each cloud puff around its initial position
+    cloudGroup.children.forEach((puff, index) => {
+      const angle = time * 0.0002 + (index * Math.PI * 2 / cloudGroup.children.length);
+      const radius = puff.userData.initialRadius || 1;
+      puff.position.x = Math.cos(angle) * radius;
+      puff.position.z = Math.sin(angle) * radius;
+    });
+  }
 }
 
 function startGame() {
@@ -365,6 +381,7 @@ function animation(time) {
     if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
       camera.position.y += speed * timePassed;
     }
+    animateClouds(time);
 
     updatePhysics(timePassed);
     renderer.render(scene, camera);
