@@ -244,7 +244,21 @@ function startGame() {
 
 function endGame() {
   gameEnded = true;
-  renderer.setAnimationLoop(null); // Stop the animation loop
+
+  // Make the last block fall
+  const lastBlock = stack[stack.length - 1];
+  if (lastBlock) {
+    const lastBlockBody = lastBlock.cannonjs;
+    lastBlockBody.mass = 5; // Give it mass so it falls
+    lastBlockBody.updateMassProperties();
+    
+    // Remove it from the stack and add to overhangs
+    stack.pop();
+    overhangs.push(lastBlock);
+  }
+
+  // Continue rendering to show falling blocks and moving clouds
+  renderer.setAnimationLoop(endGameAnimation);
 
   enableScroll(); 
 
@@ -256,6 +270,18 @@ function endGame() {
   // scroll message
   const scrollMessage = document.getElementById("scrollMessage");
   if (scrollMessage) scrollMessage.style.display = "block";
+}
+
+function endGameAnimation(time) {
+  updatePhysics(16); // Update physics at 60fps
+  animateClouds(time);
+  renderer.render(scene, camera);
+
+  // Check if all overhangs have fallen below a certain point
+  const allBlocksFallen = overhangs.every(block => block.threejs.position.y < -20);
+  if (allBlocksFallen) {
+    renderer.setAnimationLoop(null);
+  }
 }
 
 
