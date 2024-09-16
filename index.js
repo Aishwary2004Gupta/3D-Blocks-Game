@@ -601,7 +601,7 @@ function showConfetti() {
     colors: ['#B8860B', '#D2691E', '#8B0000', '#006400', '#00008B', '#DAA520'],
     ticks: 300,
     gravity: 0.8,
-    shapes: ['circle', 'square'],
+    shapes: ['circle', 'square','star'],
     zIndex: 9999
   });
 }
