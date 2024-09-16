@@ -569,7 +569,6 @@ function onTouchMove(event) {
 function onScroll(event) {
   if (!gameEnded) return;
 
-  // Adjust camera position based on scroll direction
   const scrollAmount = event.deltaY * 0.05; // Adjust this multiplier to control scroll speed
   camera.position.y -= scrollAmount;
 
