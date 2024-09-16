@@ -595,15 +595,6 @@ function onArrowKey(event) {
   renderer.render(scene, camera);
 }
 
-function updateBestScoreLine() {
-  if (bestScoreLine) {
-    const points = [];
-    points.push(new THREE.Vector3(-5, boxHeight * bestScore, 0));
-    points.push(new THREE.Vector3(5, boxHeight * bestScore, 0));
-    bestScoreLine.geometry.setFromPoints(points);  // Update the position of the line
-  }
-}
-
 function showConfetti() {
   confetti({
     particleCount: 200,
