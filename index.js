@@ -112,8 +112,7 @@ function init() {
 }
 
 function addTransparentFloor() {
-  // Check if clouds have already been added
-  if (cloudsAdded) return; // Exit the function if clouds are already added
+  if (cloudsAdded) return;
 
   const floorSize = originalBoxSize * 2.3;
   const floorHeight = -0.9;
