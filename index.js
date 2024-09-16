@@ -12,7 +12,7 @@ let world; // CannonJs world
 let lastTime; 
 let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
-const boxHeight = 0.8; 
+const boxHeight = 0.7; 
 const originalBoxSize = 2.8; 
 let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
