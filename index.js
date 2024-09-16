@@ -81,7 +81,7 @@ function init() {
 
   scene = new THREE.Scene();
 
-  // Foundation (initial block with light red color)
+  // Foundation
   addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
 
   // First layer
