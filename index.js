@@ -130,7 +130,6 @@ function addTransparentFloor() {
     opacity: 0.8
   });
 
-  // Create cloud puffs
   cloudGroup = new THREE.Group(); // Use the global cloudGroup variable
   const numPuffs = 60;
 
