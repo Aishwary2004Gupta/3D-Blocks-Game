@@ -518,7 +518,7 @@ function handleInput(event) {
   } else if (event.key == "r" || event.key == "R") {
     startGame();
   } else if (event.key.toLowerCase() == "b") {
-    
+
     if (autopilot || gameEnded) {
       bestScore = 0;
       localStorage.setItem("bestScore", bestScore);
