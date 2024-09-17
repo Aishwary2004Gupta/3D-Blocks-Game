@@ -109,6 +109,8 @@ function init() {
   
   // current best score
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
+
+  updateRendererSize();
 }
 
 function addTransparentFloor() {
@@ -523,8 +525,8 @@ function handleInput(event) {
   }
 }
 
-window.addEventListener("resize", () => {
-  
+// Added this new function
+function updateRendererSize() {
   const aspect = window.innerWidth / window.innerHeight;
   const width = 10;
   const height = width / aspect;
@@ -534,9 +536,11 @@ window.addEventListener("resize", () => {
   camera.top = height / 2;
   camera.bottom = height / -2;
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
   camera.updateProjectionMatrix();
-});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener("resize", updateRendererSize);
 
 function enableScroll() {
   window.addEventListener("wheel", onScroll);
