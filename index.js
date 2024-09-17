@@ -403,8 +403,9 @@ function animation(time) {
     }
 
     // 4 is the initial camera height
+    const cameraSpeed = 0.0015;
     if (camera.position.y < boxHeight * (stack.length - 2) + 4) {
-      camera.position.y += speed * timePassed;
+      camera.position.y += cameraSpeed * timePassed;
     }
     animateClouds(time);
 
