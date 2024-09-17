@@ -117,7 +117,7 @@ function addTransparentFloor() {
   if (cloudsAdded) return;
 
   const floorSize = originalBoxSize * 2.3;
-  const floorHeight = -0.9;
+  const floorHeight = 0.9;
   const floorPosition = -1.2;
 
   // Create a cloud-like shape
