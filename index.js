@@ -518,9 +518,12 @@ function handleInput(event) {
   } else if (event.key == "r" || event.key == "R") {
     startGame();
   } else if (event.key.toLowerCase() == "b") {
-    bestScore = 0;
-    localStorage.setItem("bestScore", bestScore);
-    bestScoreElement.innerText = `Best Score: ${bestScore}`;
+    
+    if (autopilot || gameEnded) {
+      bestScore = 0;
+      localStorage.setItem("bestScore", bestScore);
+      bestScoreElement.innerText = `Best Score: ${bestScore}`;
+    }
   }
 }
 
