@@ -417,7 +417,11 @@ function animation(time) {
 }
 
 function updatePhysics(timePassed) {
-  world.step(timePassed / 1000); // Step the physics world
+  world.step(timePassed / 1000); // Keep original time step
+
+  // Slow down the cloud rotation
+  const cloudRotationSpeed = 0.001; // Reduced from the original speed
+  const cloudRotation = cloudGroup ? cloudGroup.rotation.y : 0;
 
   // Copy coordinates from Cannon.js to Three.js
   overhangs.forEach((element) => {
@@ -433,6 +437,19 @@ function updatePhysics(timePassed) {
       // Set the velocity to zero to stop the block from moving
       element.cannonjs.velocity.set(0, 0, 0);
       element.cannonjs.angularVelocity.set(0, 0, 0);
+
+      // Rotate the block's position around the y-axis more slowly
+      const radius = Math.sqrt(
+        element.threejs.position.x ** 2 + element.threejs.position.z ** 2
+      );
+      const angle = Math.atan2(element.threejs.position.z, element.threejs.position.x);
+      const newAngle = angle + cloudRotation * cloudRotationSpeed;
+
+      element.threejs.position.x = Math.cos(newAngle) * radius;
+      element.threejs.position.z = Math.sin(newAngle) * radius;
+
+      // Update the CannonJS body position to match
+      element.cannonjs.position.copy(element.threejs.position);
     }
   });
 }
