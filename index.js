@@ -425,10 +425,10 @@ function updatePhysics(timePassed) {
     element.threejs.quaternion.copy(element.cannonjs.quaternion);
 
     // Check if the block has fallen below the ground level
-    if (element.threejs.position.y < 0) {
+    if (element.threejs.position.y < -0.4) {
       // Set the y position to the ground level
-      element.threejs.position.y = 0;
-      element.cannonjs.position.y = 0;
+      element.threejs.position.y = -0.4;
+      element.cannonjs.position.y = -0.4;
 
       // Set the velocity to zero to stop the block from moving
       element.cannonjs.velocity.set(0, 0, 0);
