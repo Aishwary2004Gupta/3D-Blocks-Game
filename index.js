@@ -116,7 +116,7 @@ function init() {
 function addTransparentFloor() {
   if (cloudsAdded) return;
 
-  const floorSize = originalBoxSize * 2.3;
+  const floorSize = originalBoxSize * 2.4;
   const floorHeight = 0.9;
   const floorPosition = -1.2;
 
