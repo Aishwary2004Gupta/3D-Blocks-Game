@@ -171,7 +171,7 @@ function addTransparentFloor() {
 
 function animateClouds(time) {
   if (cloudGroup) {
-    cloudGroup.rotation.y = time * 0.0001; // Slow, constant rotation
+    cloudGroup.rotation.y = time * 0.0001;
     
     // Rotate each cloud puff around its initial position
     cloudGroup.children.forEach((puff, index) => {
