@@ -417,38 +417,34 @@ function animation(time) {
 }
 
 function updatePhysics(timePassed) {
-  world.step(timePassed / 1000); // Keep original time step
+  world.step(timePassed / 1000);
 
-  // Slow down the cloud rotation
-  const cloudRotationSpeed = 0.001; // Reduced from the original speed
-  const cloudRotation = cloudGroup ? cloudGroup.rotation.y : 0;
+  const cloudRotationSpeed = 0.0001; // Constant rotation speed
 
-  // Copy coordinates from Cannon.js to Three.js
   overhangs.forEach((element) => {
     element.threejs.position.copy(element.cannonjs.position);
     element.threejs.quaternion.copy(element.cannonjs.quaternion);
 
-    // Check if the block has fallen below the ground level
     if (element.threejs.position.y < -0.4) {
-      // Set the y position to the ground level
       element.threejs.position.y = -0.4;
       element.cannonjs.position.y = -0.4;
 
-      // Set the velocity to zero to stop the block from moving
       element.cannonjs.velocity.set(0, 0, 0);
       element.cannonjs.angularVelocity.set(0, 0, 0);
 
-      // Rotate the block's position around the y-axis more slowly
-      const radius = Math.sqrt(
-        element.threejs.position.x ** 2 + element.threejs.position.z ** 2
-      );
-      const angle = Math.atan2(element.threejs.position.z, element.threejs.position.x);
-      const newAngle = angle + cloudRotation * cloudRotationSpeed;
+      // Use the time passed to calculate rotation
+      const rotationAngle = cloudRotationSpeed * timePassed;
 
-      element.threejs.position.x = Math.cos(newAngle) * radius;
-      element.threejs.position.z = Math.sin(newAngle) * radius;
+      // Rotate the position around the y-axis
+      const x = element.threejs.position.x;
+      const z = element.threejs.position.z;
+      const cos = Math.cos(rotationAngle);
+      const sin = Math.sin(rotationAngle);
 
-      // Update the CannonJS body position to match
+      element.threejs.position.x = x * cos - z * sin;
+      element.threejs.position.z = x * sin + z * cos;
+
+      // Update the CannonJS body position
       element.cannonjs.position.copy(element.threejs.position);
     }
   });
