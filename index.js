@@ -423,6 +423,17 @@ function updatePhysics(timePassed) {
   overhangs.forEach((element) => {
     element.threejs.position.copy(element.cannonjs.position);
     element.threejs.quaternion.copy(element.cannonjs.quaternion);
+
+    // Check if the block has fallen below the ground level
+    if (element.threejs.position.y < 0) {
+      // Set the y position to the ground level
+      element.threejs.position.y = 0;
+      element.cannonjs.position.y = 0;
+
+      // Set the velocity to zero to stop the block from moving
+      element.cannonjs.velocity.set(0, 0, 0);
+      element.cannonjs.angularVelocity.set(0, 0, 0);
+    }
   });
 }
 
