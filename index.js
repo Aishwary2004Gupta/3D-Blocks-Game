@@ -118,7 +118,7 @@ function addTransparentFloor() {
 
   const floorSize = originalBoxSize * 2.4;
   const floorHeight = 0.9;
-  const floorPosition = -1.2;
+  const floorPosition = -1.4;
 
   // Create a cloud-like shape
   const cloudGeometry = new THREE.SphereGeometry(floorSize / 6, 32, 32);
