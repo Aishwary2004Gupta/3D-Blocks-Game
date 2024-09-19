@@ -271,7 +271,7 @@ function endGame() {
 }
 
 function endGameAnimation(time) {
-  updatePhysics(16); // Update physics at 60fps
+  updatePhysics(16);
   animateClouds(time);
   renderer.render(scene, camera);
 
