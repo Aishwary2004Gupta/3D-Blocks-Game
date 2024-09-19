@@ -145,7 +145,7 @@ function addTransparentFloor() {
     );
     
     const puffScale = 1.5 + Math.random() * 0.5;
-    cloudPuff.scale.set(puffScale, puffScale * 0.6, puffScale);
+    cloudPuff.scale.set(puffScale, puffScale * 0.5, puffScale);
     
     // Store the initial radius for later use in animation
     cloudPuff.userData.initialRadius = radius;
