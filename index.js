@@ -164,8 +164,6 @@ function addTransparentFloor() {
 
   // Store the cloud group for potential future updates
   floor = cloudGroup;
-
-  // Mark clouds as added
   cloudsAdded = true;
 }
 
