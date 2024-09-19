@@ -156,7 +156,7 @@ function addTransparentFloor() {
   cloudGroup.position.set(0, floorPosition, 0);
   scene.add(cloudGroup);
 
-  // CannonJS (invisible physics floor)
+  //Floor
   const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, 0.1, floorSize / 2));
   const body = new CANNON.Body({ mass: 0, shape: shape });
   body.position.set(0, floorPosition - 0.5, 0);
