@@ -290,7 +290,7 @@ function addOverhang(x, z, width, depth) {
 }
 
 function addLayer(x, z, width, depth, direction, isInitial = false) {
-  const y = boxHeight * stack.length; // Add the new box one layer higher
+  const y = boxHeight * stack.length;
   const layer = generateBox(x, y, z, width, depth, false, isInitial);
   layer.direction = direction;
   stack.push(layer);
