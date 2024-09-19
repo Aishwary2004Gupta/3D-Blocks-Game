@@ -551,7 +551,6 @@ function handleInput(event) {
   }
 }
 
-// Added this new function
 function updateRendererSize() {
   const aspect = window.innerWidth / window.innerHeight;
   const width = 10;
@@ -599,7 +598,7 @@ function onTouchMove(event) {
 function onScroll(event) {
   if (!gameEnded) return;
 
-  const scrollAmount = event.deltaY * 0.05; // Adjust this multiplier to control scroll speed
+  const scrollAmount = event.deltaY * 0.05;
   camera.position.y -= scrollAmount;
 
   // Restrict camera's vertical movement within reasonable bounds
