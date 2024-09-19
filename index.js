@@ -316,7 +316,6 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
   mesh.add(edges);
 
-  // CannonJS
   const shape = new CANNON.Box(
     new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
   );
