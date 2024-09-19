@@ -611,7 +611,7 @@ function onScroll(event) {
 function onArrowKey(event) {
   if (!gameEnded) return;
 
-  let scrollAmount = 1; // Adjust the amount moved by arrow keys
+  let scrollAmount = 1;
   if (event.key === "ArrowUp") {
     camera.position.y += scrollAmount;
   } else if (event.key === "ArrowDown") {
