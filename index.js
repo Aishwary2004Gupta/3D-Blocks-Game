@@ -417,12 +417,18 @@ function updatePhysics(timePassed) {
   world.step(timePassed / 1000);
 
   const cloudRotationSpeed = 0.0001; // Constant rotation speed
+  const cloudRadius = originalBoxSize * 1.9;
 
-  overhangs.forEach((element) => {
+  overhangs.forEach((element, index) => {
     element.threejs.position.copy(element.cannonjs.position);
     element.threejs.quaternion.copy(element.cannonjs.quaternion);
 
-    if (element.threejs.position.y < -0.4) {
+    // Check if the block is within the cloud range
+    const distanceFromCenter = Math.sqrt(
+      element.threejs.position.x ** 2 + element.threejs.position.z ** 2
+    );
+
+    if (element.threejs.position.y < -0.4 && distanceFromCenter <= cloudRadius) {
       element.threejs.position.y = -0.4;
       element.cannonjs.position.y = -0.4;
 
@@ -443,6 +449,11 @@ function updatePhysics(timePassed) {
 
       // Update the CannonJS body position
       element.cannonjs.position.copy(element.threejs.position);
+    } else if (element.threejs.position.y < -20) {
+      // Remove the block if it falls too far
+      world.remove(element.cannonjs);
+      scene.remove(element.threejs);
+      overhangs.splice(index, 1);
     }
   });
 }
