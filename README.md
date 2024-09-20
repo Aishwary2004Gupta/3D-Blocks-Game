@@ -6,7 +6,10 @@ Using CannonJs for the physics (block breaking and falling down)
 My highest score is 52 lets see if you can bet it 
 
 
-https://github.com/user-attachments/assets/d0393121-61a0-4b93-8334-bb3a2da1240f
+
+https://github.com/user-attachments/assets/51bca099-97b9-470f-bbf1-28505cd8abc2
+
+
 
 
 
