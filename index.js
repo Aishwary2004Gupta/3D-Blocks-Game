@@ -130,7 +130,7 @@ function addTransparentFloor() {
     opacity: 0.8
   });
 
-  cloudGroup = new THREE.Group(); // Use the global cloudGroup variable
+  cloudGroup = new THREE.Group(); 
   const numPuffs = 60;
 
   for (let i = 0; i < numPuffs; i++) {
@@ -171,7 +171,6 @@ function animateClouds(time) {
   if (cloudGroup) {
     cloudGroup.rotation.y = time * 0.0001;
     
-    // Rotate each cloud puff around its initial position
     cloudGroup.children.forEach((puff, index) => {
       const angle = time * 0.0002 + (index * Math.PI * 2 / cloudGroup.children.length);
       const radius = puff.userData.initialRadius || 1;
