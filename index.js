@@ -123,15 +123,16 @@ function addTransparentFloor() {
   // Create a cloud-like shape
   const cloudGeometry = new THREE.SphereGeometry(floorSize / 6, 32, 32);
   const cloudMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
-    emissive: 0xffffff,
-    emissiveIntensity: 0.2,
+    color: 0xcccccc,
+    emissive: 0x222222,
+    emissiveIntensity: 0.5,
     transparent: true,
-    opacity: 0.8
+
+    opacity: 0.6
   });
 
   cloudGroup = new THREE.Group(); 
-  const numPuffs = 60;
+  const numPuffs = 70;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
