@@ -635,8 +635,6 @@ function onArrowKey(event) {
 }
 
 function showConfetti() {
-  const confettiDuration = 3000; // Duration in milliseconds (3 seconds)
-
   confetti({
     particleCount: 200,
     spread: 160,
