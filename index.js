@@ -524,13 +524,16 @@ function missedTheSpot() {
   stack.pop();
 
   // Update best score if the current score is higher
-  
   if (currentScore > bestScore) {
+    const isFirstGame = bestScore === 0;
     bestScore = currentScore;
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
-    // Show confetti
-    showConfetti();
+    
+    // Show confetti only if it's not the first game
+    if (!isFirstGame) {
+      showConfetti();
+    }
   }
 
   endGame();
@@ -635,7 +638,7 @@ function showConfetti() {
 
   // Create and show the high score message
   const highScoreMessage = document.createElement('div');
-  highScoreMessage.textContent = 'High Score!';
+  highScoreMessage.textContent = 'New High Score!';
   highScoreMessage.style.position = 'fixed';
   highScoreMessage.style.top = '50%';
   highScoreMessage.style.left = '50%';
