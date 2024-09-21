@@ -632,6 +632,22 @@ function onArrowKey(event) {
 }
 
 function showConfetti() {
+  const confettiDuration = 3000; // Duration in milliseconds (3 seconds)
+
+  // Create and show the high score message
+  const highScoreMessage = document.createElement('div');
+  highScoreMessage.textContent = 'High Score!';
+  highScoreMessage.style.position = 'fixed';
+  highScoreMessage.style.top = '50%';
+  highScoreMessage.style.left = '50%';
+  highScoreMessage.style.transform = 'translate(-50%, -50%)';
+  highScoreMessage.style.fontSize = '48px';
+  highScoreMessage.style.fontWeight = 'bold';
+  highScoreMessage.style.color = '#FFD700';
+  highScoreMessage.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+  highScoreMessage.style.zIndex = '10000';
+  document.body.appendChild(highScoreMessage);
+
   confetti({
     particleCount: 200,
     spread: 160,
@@ -642,4 +658,9 @@ function showConfetti() {
     shapes: ['circle', 'square', 'star'],
     zIndex: 9999
   });
+
+  // Remove the high score message after the confetti duration
+  setTimeout(() => {
+    document.body.removeChild(highScoreMessage);
+  }, confettiDuration);
 }
