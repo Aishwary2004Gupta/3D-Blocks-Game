@@ -530,10 +530,11 @@ function missedTheSpot() {
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
     
-    // Show confetti only if it's not the first game
-    if (!isFirstGame) {
-      showConfetti();
-    }
+    // Show confetti for all high scores
+    showConfetti();
+
+    // Highlight the best score text
+    highlightBestScore(isFirstGame);
   }
 
   endGame();
@@ -636,20 +637,6 @@ function onArrowKey(event) {
 function showConfetti() {
   const confettiDuration = 3000; // Duration in milliseconds (3 seconds)
 
-  // Create and show the high score message
-  const highScoreMessage = document.createElement('div');
-  highScoreMessage.textContent = 'New High Score!';
-  highScoreMessage.style.position = 'fixed';
-  highScoreMessage.style.top = '50%';
-  highScoreMessage.style.left = '50%';
-  highScoreMessage.style.transform = 'translate(-50%, -50%)';
-  highScoreMessage.style.fontSize = '48px';
-  highScoreMessage.style.fontWeight = 'bold';
-  highScoreMessage.style.color = '#FFD700';
-  highScoreMessage.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
-  highScoreMessage.style.zIndex = '10000';
-  document.body.appendChild(highScoreMessage);
-
   confetti({
     particleCount: 200,
     spread: 160,
@@ -660,9 +647,27 @@ function showConfetti() {
     shapes: ['circle', 'square', 'star'],
     zIndex: 9999
   });
+}
 
-  // Remove the high score message after the confetti duration
+function highlightBestScore(isFirstGame) {
+  const highlightDuration = 3000; // Duration in milliseconds (3 seconds)
+  
+  bestScoreElement.style.transition = 'all 0.3s ease-in-out';
+  bestScoreElement.style.transform = 'scale(1.2)';
+  bestScoreElement.style.color = '#FFD700'; // Gold color
+  bestScoreElement.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
+
+  if (isFirstGame) {
+    bestScoreElement.textContent = 'Best Score: ' + bestScore;
+  } else {
+    bestScoreElement.textContent = 'New Best Score: ' + bestScore;
+  }
+
   setTimeout(() => {
-    document.body.removeChild(highScoreMessage);
-  }, confettiDuration);
+    bestScoreElement.style.transition = 'all 0.3s ease-in-out';
+    bestScoreElement.style.transform = 'scale(1)';
+    bestScoreElement.style.color = ''; // Reset to default color
+    bestScoreElement.style.textShadow = '';
+    bestScoreElement.textContent = 'Best Score: ' + bestScore;
+  }, highlightDuration);
 }
