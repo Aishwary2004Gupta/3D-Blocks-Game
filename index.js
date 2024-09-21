@@ -127,7 +127,6 @@ function addTransparentFloor() {
     emissive: 0x222222,
     emissiveIntensity: 0.5,
     transparent: true,
-
     opacity: 0.6
   });
 
