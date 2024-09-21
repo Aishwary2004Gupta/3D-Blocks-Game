@@ -107,7 +107,7 @@ function init() {
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
   
-  // current best score
+  updateBestScore();
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
 
   updateRendererSize();
@@ -558,8 +558,13 @@ function handleInput(event) {
       bestScore = 0;
       localStorage.setItem("bestScore", bestScore);
       bestScoreElement.innerText = `Best Score: ${bestScore}`;
+      updateBestScore();
     }
   }
+}
+
+function updateBestScore() {
+  bestScore = parseInt(localStorage.getItem("bestScore")) || 0;
 }
 
 function updateRendererSize() {
