@@ -131,7 +131,7 @@ function addTransparentFloor() {
   });
 
   cloudGroup = new THREE.Group(); 
-  const numPuffs = 70;
+  const numPuffs = 80;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
