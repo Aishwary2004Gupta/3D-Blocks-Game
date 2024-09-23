@@ -675,10 +675,3 @@ function highlightBestScore(isFirstGame) {
     bestScoreElement.textContent = 'Best Score: ' + bestScore;
   }, highlightDuration);
 }
-
-// function setupBuyMeACoffeeButton() {
-//   const button = document.getElementById("buyMeACoffee");
-//   button.addEventListener("click", () => {
-//     window.open("https://buymeacoffee.com/aishwary_gupta", "_blank"); 
-//   });
-// }
