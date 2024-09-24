@@ -6,6 +6,7 @@ window.addEventListener("touchend", handleTouchEnd);
 let touchStartTime;
 let cloudsAdded = false;
 let cloudGroup;
+let isPaused = false; // Track the pause state
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
@@ -548,19 +549,32 @@ function handleInput(event) {
   if (event.key == " " || event.type == "touchend") {
     if (autopilot) {
       startGame();
-    } else {
+    } else if (!isPaused) {
       placeLayer();
     }
+  } else if (event.key == "p" || event.key == "P") {
+    togglePause(); // Toggle pause state
   } else if (event.key == "r" || event.key == "R") {
     startGame();
   } else if (event.key.toLowerCase() == "b") {
-
     if (autopilot || gameEnded) {
       bestScore = 0;
       localStorage.setItem("bestScore", bestScore);
       bestScoreElement.innerText = `Best Score: ${bestScore}`;
       updateBestScore();
     }
+  }
+}
+
+function togglePause() {
+  isPaused = !isPaused; // Toggle the pause state
+  if (isPaused) {
+    disableScroll(); // Disable scrolling when paused
+    renderer.setAnimationLoop(null); // Stop the animation loop
+  } else {
+    enableScroll(); // Re-enable scrolling when unpaused
+    lastTime = performance.now(); // Reset lastTime to current time to continue from paused position
+    renderer.setAnimationLoop(animation); // Resume the animation loop
   }
 }
 
