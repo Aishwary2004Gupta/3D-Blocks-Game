@@ -378,7 +378,6 @@ function animation(time) {
     const topLayer = stack[stack.length - 1];
 
     // The top level box should move if the game has not ended AND
-    // it's either NOT in autopilot or it is in autopilot and the box did not yet reach the robot position
     const boxShouldMove =
       !gameEnded &&
       (!autopilot ||
@@ -394,7 +393,6 @@ function animation(time) {
         missedTheSpot();
       }
     } else {
-      // (if the game is not over)
       if (autopilot) {
         placeLayer();
         setRobotPrecision();
@@ -575,7 +573,8 @@ function togglePause() {
     renderer.setAnimationLoop(null); 
   } else {
     enableScroll(); 
-    lastTime = performance.now(); // Reset lastTime to current time to continue from paused position
+    // Reset lastTime to current time to continue from paused position
+    lastTime = performance.now(); 
     renderer.setAnimationLoop(animation); 
   }
 }
