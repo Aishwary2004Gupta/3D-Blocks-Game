@@ -572,11 +572,11 @@ function togglePause() {
   isPaused = !isPaused; 
   if (isPaused) {
     disableScroll(); 
-    renderer.setAnimationLoop(null); // Stop the animation loop
+    renderer.setAnimationLoop(null); 
   } else {
-    enableScroll(); // Re-enable scrolling when unpaused
+    enableScroll(); 
     lastTime = performance.now(); // Reset lastTime to current time to continue from paused position
-    renderer.setAnimationLoop(animation); // Resume the animation loop
+    renderer.setAnimationLoop(animation); 
   }
 }
 
