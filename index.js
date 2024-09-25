@@ -1,5 +1,4 @@
 window.focus(); 
-
 window.addEventListener("touchstart", handleTouchStart);
 window.addEventListener("touchend", handleTouchEnd);
 
@@ -81,13 +80,10 @@ function init() {
   camera.lookAt(0, 0, 0);
 
   scene = new THREE.Scene();
-
   // Foundation
   addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
-
   // First layer
   addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
-
   // lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
   scene.add(ambientLight);
@@ -101,7 +97,6 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   addTransparentFloor();
-
   // initial scene
   renderer.render(scene, camera);
 
@@ -110,7 +105,6 @@ function init() {
   
   updateBestScore();
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
-
   updateRendererSize();
   // setupBuyMeACoffeeButton();
 }
@@ -258,7 +252,6 @@ function endGame() {
 
   // Continue rendering to show falling blocks and moving clouds
   renderer.setAnimationLoop(endGameAnimation);
-
   enableScroll(); 
 
   // Show instructions and results when the game ends
