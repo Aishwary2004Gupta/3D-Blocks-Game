@@ -567,12 +567,11 @@ function handleInput(event) {
 }
 
 function togglePause() {
-  // Only allow toggling pause if the game is currently being played
   if (gameEnded || autopilot) return;
 
-  isPaused = !isPaused; // Toggle the pause state
+  isPaused = !isPaused; 
   if (isPaused) {
-    disableScroll(); // Disable scrolling when paused
+    disableScroll(); 
     renderer.setAnimationLoop(null); // Stop the animation loop
   } else {
     enableScroll(); // Re-enable scrolling when unpaused
