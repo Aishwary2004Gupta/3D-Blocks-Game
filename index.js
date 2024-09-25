@@ -217,7 +217,6 @@ function startGame() {
 
     // Foundation
     addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
-
     // First layer
     addLayer(-10, 0, originalBoxSize, originalBoxSize, "x");
   }
@@ -228,21 +227,18 @@ function startGame() {
     camera.position.set(4, 4, 4);
     camera.lookAt(0, 0, 0);
   }
-
   // Start the animation loop
   renderer.setAnimationLoop(animation);
 }
 
 function endGame() {
   gameEnded = true;
-
   // Make the last block fall
   const lastBlock = stack[stack.length - 1];
   if (lastBlock) {
     const lastBlockBody = lastBlock.cannonjs;
     lastBlockBody.mass = 5; // Give it mass so it falls
     lastBlockBody.updateMassProperties();
-    
     // Remove it from the stack and add to overhangs
     stack.pop();
     overhangs.push(lastBlock);
