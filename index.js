@@ -6,7 +6,7 @@ window.addEventListener("touchend", handleTouchEnd);
 let touchStartTime;
 let cloudsAdded = false;
 let cloudGroup;
-let isPaused = false; // Track the pause state
+let isPaused = false; 
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
@@ -650,7 +650,6 @@ function onArrowKey(event) {
     camera.position.y -= scrollAmount;
   }
 
-  // Restrict camera's vertical movement within reasonable bounds
   camera.position.y = Math.max(4, Math.min(stack.length * boxHeight + 4, camera.position.y));
 
   renderer.render(scene, camera);
