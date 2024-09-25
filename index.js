@@ -145,7 +145,6 @@ function addTransparentFloor() {
     
     // Store the initial radius for later use in animation
     cloudPuff.userData.initialRadius = radius;
-    
     cloudGroup.add(cloudPuff);
   }
 
@@ -166,7 +165,6 @@ function addTransparentFloor() {
 function animateClouds(time) {
   if (cloudGroup) {
     cloudGroup.rotation.y = time * 0.0001;
-    
     cloudGroup.children.forEach((puff, index) => {
       const angle = time * 0.0002 + (index * Math.PI * 2 / cloudGroup.children.length);
       const radius = puff.userData.initialRadius || 1;
