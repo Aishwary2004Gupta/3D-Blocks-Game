@@ -311,6 +311,14 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   mass *= width / originalBoxSize; // Reduce mass proportionately by size
   mass *= depth / originalBoxSize; // Reduce mass proportionately by size
   const body = new CANNON.Body({ mass, shape });
+
+  // Set angular velocity to zero to prevent random tilting
+  body.angularVelocity.set(0, 0, 0);
+  
+  // Increase friction to help blocks settle
+  body.material = new CANNON.Material();
+  body.friction = 0.8; // Adjust friction as needed
+
   body.position.set(x, y, z);
   world.addBody(body);
 
