@@ -284,7 +284,6 @@ function addLayer(x, z, width, depth, direction, isInitial = false) {
   stack.push(layer);
 }
 
-
 function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // ThreeJS
   const geometry = new THREE.BoxGeometry(width, boxHeight, depth);
@@ -318,7 +317,6 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // Increase friction to help blocks settle
   body.material = new CANNON.Material();
   body.friction = 0.8; // Adjust friction as needed
-
   body.position.set(x, y, z);
   world.addBody(body);
 
