@@ -113,8 +113,8 @@ function addTransparentFloor() {
   if (cloudsAdded) return;
 
   const floorSize = originalBoxSize * 2.4;
-  const floorHeight = 0.9;
-  const floorPosition = -1.3;
+  const floorHeight = -0.6;
+  const floorPosition = -1.4;
 
   // Create a cloud-like shape
   const cloudGeometry = new THREE.SphereGeometry(floorSize / 6, 32, 32);
@@ -127,7 +127,7 @@ function addTransparentFloor() {
   });
 
   cloudGroup = new THREE.Group(); 
-  const numPuffs = 80;
+  const numPuffs = 95;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
