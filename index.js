@@ -10,7 +10,7 @@ let isPaused = false;
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
 let lastTime; 
-let stack; // Parts that stay solid on top of each other
+let stack; // Parts that stay solid on top of each other 
 let overhangs; // Overhanging parts that fall down
 const boxHeight = 0.7; 
 const originalBoxSize = 2.8; 
