@@ -1,22 +1,22 @@
-window.focus(); 
+window.focus();
 window.addEventListener("touchstart", handleTouchStart);
 window.addEventListener("touchend", handleTouchEnd);
 
 let touchStartTime;
 let cloudsAdded = false;
 let cloudGroup;
-let isPaused = false; 
+let isPaused = false;
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
-let lastTime; 
+let lastTime;
 let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
-const boxHeight = 0.7; 
-const originalBoxSize = 2.8; 
+const boxHeight = 0.7;
+const originalBoxSize = 2.8;
 let autopilot = true; // Set autopilot to true initially so the game doesn't start
 let gameEnded;
-let robotPrecision; 
+let robotPrecision;
 let floor;
 
 let bestScore = localStorage.getItem("bestScore") || 0;
@@ -102,7 +102,7 @@ function init() {
 
   // Show instructions
   if (instructionsElement) instructionsElement.style.display = "block";
-  
+
   updateBestScore();
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
   updateRendererSize();
@@ -126,12 +126,12 @@ function addTransparentFloor() {
     opacity: 0.6
   });
 
-  cloudGroup = new THREE.Group(); 
+  cloudGroup = new THREE.Group();
   const numPuffs = 95;
 
   for (let i = 0; i < numPuffs; i++) {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
-    
+
     const angle = (i / numPuffs) * Math.PI * 2;
     const radius = floorSize / 3 * (Math.random() * 3);
     cloudPuff.position.set(
@@ -139,10 +139,10 @@ function addTransparentFloor() {
       (Math.random() - 0.5) * floorHeight * 0.5,
       Math.sin(angle) * radius
     );
-    
+
     const puffScale = 1.5 + Math.random() * 0.5;
     cloudPuff.scale.set(puffScale, puffScale * 0.5, puffScale);
-    
+
     // Store the initial radius for later use in animation
     cloudPuff.userData.initialRadius = radius;
     cloudGroup.add(cloudPuff);
@@ -246,7 +246,7 @@ function endGame() {
 
   // Continue rendering to show falling blocks and moving clouds
   renderer.setAnimationLoop(endGameAnimation);
-  enableScroll(); 
+  enableScroll();
 
   // Show instructions and results when the game ends
   if (resultsElement) resultsElement.style.display = "block";
@@ -291,7 +291,7 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   // Set block color (use HSL color for easy manipulation)
   const blockHue = (170 + stack.length * 7) % 360; // Cycle through hues for the blocks
   const blockColor = new THREE.Color(`hsl(${blockHue}, 100%, 50%)`);
-  
+
   const material = new THREE.MeshLambertMaterial({ color: blockColor });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.position.set(x, y, z);
@@ -313,7 +313,7 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
 
   // Set angular velocity to zero to prevent random tilting
   body.angularVelocity.set(0, 0, 0);
-  
+
   // Increase friction to help blocks settle
   body.material = new CANNON.Material();
   body.friction = 0.8; // Adjust friction as needed
@@ -481,8 +481,8 @@ function placeLayer() {
     // Next layer
     const nextX = direction == "x" ? topLayer.threejs.position.x : -10;
     const nextZ = direction == "z" ? topLayer.threejs.position.z : -10;
-    const newWidth = topLayer.width; 
-    const newDepth = topLayer.depth; 
+    const newWidth = topLayer.width;
+    const newDepth = topLayer.depth;
     const nextDirection = direction == "x" ? "z" : "x";
 
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
@@ -522,7 +522,7 @@ function missedTheSpot() {
     bestScore = currentScore;
     localStorage.setItem("bestScore", bestScore);
     bestScoreElement.innerText = `Best Score: ${bestScore}`;
-    
+
     // Show confetti for all high scores
     showConfetti();
 
@@ -560,15 +560,15 @@ function handleInput(event) {
 function togglePause() {
   if (gameEnded || autopilot) return;
 
-  isPaused = !isPaused; 
+  isPaused = !isPaused;
   if (isPaused) {
-    disableScroll(); 
-    renderer.setAnimationLoop(null); 
+    disableScroll();
+    renderer.setAnimationLoop(null);
   } else {
-    enableScroll(); 
+    enableScroll();
     // Reset lastTime to current time to continue from paused position
-    lastTime = performance.now(); 
-    renderer.setAnimationLoop(animation); 
+    lastTime = performance.now();
+    renderer.setAnimationLoop(animation);
   }
 }
 
@@ -662,7 +662,7 @@ function showConfetti() {
 
 function highlightBestScore(isFirstGame) {
   const highlightDuration = 3000; // Duration in milliseconds (3 seconds)
-  
+
   bestScoreElement.style.transition = 'all 0.3s ease-in-out';
   bestScoreElement.style.transform = 'scale(1.2)';
   bestScoreElement.style.color = '#FFD700'; // Gold color
