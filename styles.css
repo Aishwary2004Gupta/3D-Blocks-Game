@@ -12,10 +12,7 @@ body {
   font-size: 80px;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
@@ -26,17 +23,14 @@ body {
   font-size: 28px;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
 .bitter-reset-score {
   font-family: "Bitter", serif;
   font-optical-sizing: auto;
-  font-weight: 400; 
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -44,7 +38,7 @@ body {
   color: red;
 }
 
-.white-text{
+.white-text {
   color: white;
 }
 
@@ -55,10 +49,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
@@ -70,10 +61,7 @@ body {
   text-align: center;
   color: #ffffff;
   font-size: 24px;
-  text-shadow: 
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
 
@@ -127,7 +115,8 @@ body.game-over #results {
   display: block;
 }
 
-body.game-over #score, body.game-over #instructions {
+body.game-over #score,
+body.game-over #instructions {
   display: none;
 }
 
@@ -173,4 +162,3 @@ body.game-over #score, body.game-over #instructions {
   padding: 10px;
   border-radius: 5px;
 }
-
