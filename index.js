@@ -9,7 +9,7 @@ let isPaused = false;
 
 let camera, scene, renderer; // ThreeJS globals
 let world; // CannonJs world
-let lastTime;
+let lastTime; 
 let stack; // Parts that stay solid on top of each other
 let overhangs; // Overhanging parts that fall down
 const boxHeight = 0.7;
@@ -106,6 +106,7 @@ function init() {
   updateBestScore();
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
   updateRendererSize();
+  // setupBuyMeACoffeeButton();
 }
 
 function addTransparentFloor() {
@@ -122,7 +123,7 @@ function addTransparentFloor() {
     emissive: 0x222222,
     emissiveIntensity: 0.5,
     transparent: true,
-    opacity: 0.6,
+    opacity: 0.6
   });
 
   cloudGroup = new THREE.Group();
@@ -132,7 +133,7 @@ function addTransparentFloor() {
     const cloudPuff = new THREE.Mesh(cloudGeometry, cloudMaterial);
 
     const angle = (i / numPuffs) * Math.PI * 2;
-    const radius = (floorSize / 3) * Math.random() * 3;
+    const radius = floorSize / 3 * (Math.random() * 3);
     cloudPuff.position.set(
       Math.cos(angle) * radius,
       (Math.random() - 0.5) * floorHeight * 0.5,
@@ -150,7 +151,7 @@ function addTransparentFloor() {
   cloudGroup.position.set(0, floorPosition, 0);
   scene.add(cloudGroup);
 
-  // Floor
+  //Floor
   const shape = new CANNON.Box(new CANNON.Vec3(floorSize / 2, 0.1, floorSize / 2));
   const body = new CANNON.Body({ mass: 0, shape: shape });
   body.position.set(0, floorPosition - 0.5, 0);
@@ -165,7 +166,7 @@ function animateClouds(time) {
   if (cloudGroup) {
     cloudGroup.rotation.y = time * 0.0001;
     cloudGroup.children.forEach((puff, index) => {
-      const angle = time * 0.0002 + (index * Math.PI * 2) / cloudGroup.children.length;
+      const angle = time * 0.0002 + (index * Math.PI * 2 / cloudGroup.children.length);
       const radius = puff.userData.initialRadius || 1;
       puff.position.x = Math.cos(angle) * radius;
       puff.position.z = Math.sin(angle) * radius;
@@ -263,11 +264,12 @@ function endGameAnimation(time) {
   renderer.render(scene, camera);
 
   // Check if all overhangs have fallen below a certain point
-  const allBlocksFallen = overhangs.every((block) => block.threejs.position.y < -20);
+  const allBlocksFallen = overhangs.every(block => block.threejs.position.y < -20);
   if (allBlocksFallen) {
     renderer.setAnimationLoop(null);
   }
 }
+
 
 function addOverhang(x, z, width, depth) {
   const y = boxHeight * (stack.length - 1); // Add the new box one layer higher
@@ -301,7 +303,9 @@ function generateBox(x, y, z, width, depth, falls, isInitial = false) {
   const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
   mesh.add(edges);
 
-  const shape = new CANNON.Box(new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2));
+  const shape = new CANNON.Box(
+    new CANNON.Vec3(width / 2, boxHeight / 2, depth / 2)
+  );
   let mass = falls ? 5 : 0;
   mass *= width / originalBoxSize; // Reduce mass proportionately by size
   mass *= depth / originalBoxSize; // Reduce mass proportionately by size
@@ -352,7 +356,9 @@ function cutBox(topLayer, overlap, size, delta) {
   topLayer.cannonjs.position[direction] -= delta / 2;
 
   // Replace shape to a smaller one (in CannonJS you can't simply scale a shape)
-  const shape = new CANNON.Box(new CANNON.Vec3(newWidth / 2, boxHeight / 2, newDepth / 2));
+  const shape = new CANNON.Box(
+    new CANNON.Vec3(newWidth / 2, boxHeight / 2, newDepth / 2)
+  );
   topLayer.cannonjs.shapes = [];
   topLayer.cannonjs.addShape(shape);
 }
