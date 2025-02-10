@@ -162,3 +162,80 @@ body.game-over #instructions {
   padding: 10px;
   border-radius: 5px;
 }
+
+/* Add mobile controls styling */
+#mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+}
+
+.mobile-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid black;
+  font-size: 24px;
+  margin: 5px;
+  touch-action: manipulation;
+}
+
+#touch-indicator {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  display: none;
+  transform: translate(-50%, -50%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #score {
+    font-size: 50px;
+    top: 20px;
+    left: 20px;
+  }
+
+  #bestScore {
+    font-size: 18px;
+    top: 20px;
+    right: 20px;
+  }
+
+  #instructions {
+    font-size: 24px;
+    bottom: 100px;
+    padding: 15px;
+  }
+
+  #results {
+    font-size: 36px;
+    padding: 20px;
+  }
+
+  #scrollMessage {
+    font-size: 16px;
+    bottom: 80px;
+  }
+
+  #mobile-controls {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  #score {
+    font-size: 40px;
+  }
+
+  #instructions {
+    font-size: 20px;
+    bottom: 80px;
+  }
+}
