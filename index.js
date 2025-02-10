@@ -19,11 +19,31 @@ let gameEnded;
 let robotPrecision;
 let floor;
 
+//mobile
+let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+// let touchStartTime;
+let touchStartX = 0;
+let touchStartY = 0;
+let cameraStartY = 4;
+
 let bestScore = localStorage.getItem("bestScore") || 0;
 const scoreElement = document.getElementById("score");
 const bestScoreElement = document.getElementById("bestScore");
 const instructionsElement = document.getElementById("instructions");
 const resultsElement = document.getElementById("results");
+
+// Initialize touch controls
+function initTouchControls() {
+  if (isMobile) {
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('touchend', handleTouchEnd);
+    document.addEventListener('touchmove', handleTouchMove);
+    
+    // Mobile control buttons
+    document.getElementById('mobile-pause').addEventListener('touchstart', togglePause);
+    document.getElementById('mobile-restart').addEventListener('touchstart', startGame);
+  }
+}
 
 function handleTouchStart(event) {
   touchStartTime = new Date().getTime();
@@ -106,8 +126,47 @@ function init() {
   updateBestScore();
   bestScoreElement.innerText = `Best Score: ${bestScore}`;
   updateRendererSize();
+  initTouchControls(); // Add this line
+  updateInstructionsForMobile();
   // setupBuyMeACoffeeButton();
 }
+
+// Update instructions for mobile
+function updateInstructionsForMobile() {
+  if (isMobile) {
+    document.getElementById('instructions').innerHTML = `
+      <p>Tap to start game</p>
+      <p>Tap to place blocks</p>
+    `;
+    
+    document.getElementById('results').innerHTML = `
+      <span class="dela-gothic-one-regular">Game Over!</span>
+      <p><span class="white-text">Tap to restart</span>
+    `;
+    
+    document.getElementById('resetScore').innerHTML = `
+      Tap '<span class="red-letter">⏸</span>' to pause
+      <br>
+      Tap '<span class="red-letter">↻</span>' to restart
+    `;
+  }
+}
+
+// Modify camera controls
+function enableScroll() {
+  if (!isMobile) {
+    window.addEventListener('wheel', onScroll);
+    window.addEventListener('keydown', onArrowKey);
+  }
+}
+
+function disableScroll() {
+  if (!isMobile) {
+    window.removeEventListener('wheel', onScroll);
+    window.removeEventListener('keydown', onArrowKey);
+  }
+}
+
 
 function addTransparentFloor() {
   if (cloudsAdded) return;
@@ -183,6 +242,10 @@ function startGame() {
 
   disableScroll();
 
+  if (isMobile) {
+    document.getElementById('mobile-controls').style.display = 'flex';
+  }
+
   // Hide instructions and results
   if (instructionsElement) instructionsElement.style.display = "none";
   if (resultsElement) resultsElement.style.display = "none";
@@ -242,6 +305,10 @@ function endGame() {
     // Remove it from the stack and add to overhangs
     stack.pop();
     overhangs.push(lastBlock);
+  }
+
+  if (isMobile) {
+    document.getElementById('mobile-controls').style.display = 'flex';
   }
 
   // Continue rendering to show falling blocks and moving clouds
@@ -537,6 +604,16 @@ function missedTheSpot() {
 window.addEventListener("keydown", handleInput);
 
 function handleInput(event) {
+  if (event.key === ' ' || (isMobile && event.type === 'touchend')) {
+    if (autopilot) {
+      startGame();
+    } else if (!isPaused) {
+      placeLayer();
+    }
+  }
+}
+
+function handleInput(event) {
   if (event.key == " " || event.type == "touchend") {
     if (autopilot) {
       startGame();
@@ -555,6 +632,43 @@ function handleInput(event) {
       updateBestScore();
     }
   }
+}
+
+function handleTouchStart(e) {
+  touchStartTime = Date.now();
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  cameraStartY = camera.position.y;
+  
+  // Show touch indicator
+  const indicator = document.getElementById('touch-indicator');
+  indicator.style.display = 'block';
+  indicator.style.left = `${touchStartX}px`;
+  indicator.style.top = `${touchStartY}px`;
+}
+
+function handleTouchEnd(e) {
+  const touchDuration = Date.now() - touchStartTime;
+  if (touchDuration < 300) { // Consider short touch as tap
+    handleInput({ type: 'touchend' });
+  }
+  
+  // Hide touch indicator
+  document.getElementById('touch-indicator').style.display = 'none';
+}
+
+function handleTouchMove(e) {
+  if (!gameEnded) return;
+  
+  const touch = e.touches[0];
+  const deltaY = touch.clientY - touchStartY;
+  camera.position.y = cameraStartY + (deltaY * 0.02);
+  
+  // Constrain camera movement
+  camera.position.y = Math.max(4, Math.min(stack.length * boxHeight + 4, camera.position.y));
+  
+  e.preventDefault();
+  renderer.render(scene, camera);
 }
 
 function togglePause() {
