@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Stacking Game</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,16 @@
 </head>
 
 <body>
+
+  <!-- Add mobile controls -->
+  <div id="mobile-controls">
+    <button id="mobile-pause" class="mobile-btn">⏸</button>
+    <button id="mobile-restart" class="mobile-btn">↻</button>
+  </div>
+
+  <!-- Add touch control indicator -->
+  <div id="touch-indicator"></div>
+
   <div id="game-container">
     <div id="score" class="nerko-one-regular">0</div>
     <div id="bestScore" class="nerko-one-regular">Best Score: 0</div>
