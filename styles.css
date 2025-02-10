@@ -239,3 +239,10 @@ body.game-over #instructions {
     bottom: 80px;
   }
 }
+
+html, body {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
