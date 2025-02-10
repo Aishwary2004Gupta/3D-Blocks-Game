@@ -49,15 +49,20 @@ function handleTouchStart(event) {
   touchStartTime = new Date().getTime();
 }
 
-function handleTouchEnd(event) {
-  const touchEndTime = new Date().getTime();
-  const touchDuration = touchEndTime - touchStartTime;
+function handleTouchEnd(e) {
+  const touchDuration = Date.now() - touchStartTime;
+  const indicator = document.getElementById('touch-indicator');
+  indicator.style.display = 'none';
 
-  // Prevent accidental touches
+  if (gameEnded) {
+    startGame();
+    return;
+  }
+
   if (touchDuration < 300) {
     if (autopilot) {
       startGame();
-    } else {
+    } else if (!isPaused) {
       placeLayer();
     }
   }
@@ -70,10 +75,13 @@ function setRobotPrecision() {
 }
 
 function init() {
+  autopilot = true;
   gameEnded = false;
+  isPaused = false;
   lastTime = 0;
   stack = [];
   overhangs = [];
+
   setRobotPrecision();
 
   // Initialize CannonJS
@@ -236,11 +244,16 @@ function animateClouds(time) {
 function startGame() {
   autopilot = false;
   gameEnded = false;
+  isPaused = false;
   lastTime = 0;
   stack = [];
   overhangs = [];
 
   disableScroll();
+
+   // Reset camera position
+   camera.position.set(4, 4, 4);
+   camera.lookAt(0, 0, 0);
 
   if (isMobile) {
     document.getElementById('mobile-controls').style.display = 'flex';
@@ -604,27 +617,17 @@ function missedTheSpot() {
 window.addEventListener("keydown", handleInput);
 
 function handleInput(event) {
-  if (event.key === ' ' || (isMobile && event.type === 'touchend')) {
+  if (event.key === ' ' || event.type === 'touchend') {
     if (autopilot) {
       startGame();
     } else if (!isPaused) {
       placeLayer();
     }
-  }
-}
-
-function handleInput(event) {
-  if (event.key == " " || event.type == "touchend") {
-    if (autopilot) {
-      startGame();
-    } else if (!isPaused) {
-      placeLayer();
-    }
-  } else if (event.key == "p" || event.key == "P") {
-    togglePause(); // Toggle pause state
-  } else if (event.key == "r" || event.key == "R") {
+  } else if (event.key === 'p' || event.key === 'P') {
+    togglePause();
+  } else if (event.key === 'r' || event.key === 'R') {
     startGame();
-  } else if (event.key.toLowerCase() == "b") {
+  } else if (event.key.toLowerCase() === 'b') {
     if (autopilot || gameEnded) {
       bestScore = 0;
       localStorage.setItem("bestScore", bestScore);
