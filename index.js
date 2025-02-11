@@ -37,16 +37,19 @@ function initTouchControls() {
   if (isMobile) {
     const pauseBtn = document.getElementById('mobile-pause');
     const restartBtn = document.getElementById('mobile-restart');
-    
-    pauseBtn.addEventListener('touchstart', function(e) {
+
+    // Add touch event listeners with proper prevention
+    pauseBtn.addEventListener('touchend', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       togglePause();
-    });
-    
-    restartBtn.addEventListener('touchstart', function(e) {
+    }, { passive: false });
+
+    restartBtn.addEventListener('touchend', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       startGame();
-    });
+    }, { passive: false });
   }
 }
 
@@ -704,6 +707,7 @@ function togglePause() {
   isPaused = !isPaused;
   const pauseBtn = document.getElementById('mobile-pause');
   
+  // Immediate visual feedback
   if (isPaused) {
     pauseBtn.textContent = '▶';
     disableScroll();
@@ -714,6 +718,9 @@ function togglePause() {
     lastTime = performance.now();
     renderer.setAnimationLoop(animation);
   }
+  
+  // Force immediate UI update
+  void pauseBtn.offsetWidth;
 }
 
 function updateBestScore() {
