@@ -54,17 +54,19 @@ function handleTouchEnd(e) {
   const indicator = document.getElementById('touch-indicator');
   indicator.style.display = 'none';
 
+  // Prevent multiple taps during game start
+  if (autopilot) {
+    startGame();
+    return;
+  }
+
   if (gameEnded) {
     startGame();
     return;
   }
 
-  if (touchDuration < 300) {
-    if (autopilot) {
-      startGame();
-    } else if (!isPaused) {
-      placeLayer();
-    }
+  if (touchDuration < 300 && !autopilot && !gameEnded && !isPaused) {
+    placeLayer();
   }
 }
 
@@ -104,8 +106,15 @@ function init() {
     100 // far plane
   );
 
+  camera.position.set(isMobile ? 6 : 4, isMobile ? 6 : 4, isMobile ? 6 : 4); // Better view for mobile
+
   camera.position.set(4, 4, 4);
   camera.lookAt(0, 0, 0);
+
+  if (isMobile) {
+    world.gravity.set(0, -8, 0); // Reduced gravity for mobile
+    world.solver.iterations = 60; // More accurate collisions
+  }
 
   scene = new THREE.Scene();
   // Foundation
@@ -258,6 +267,8 @@ function startGame() {
   if (isMobile) {
     document.getElementById('mobile-controls').style.display = 'flex';
   }
+   // First layer
+   addLayer(isMobile ? -5 : -10, 0, originalBoxSize, originalBoxSize, "x"); // Closer starting position for mobile
 
   // Hide instructions and results
   if (instructionsElement) instructionsElement.style.display = "none";
@@ -446,7 +457,7 @@ function cutBox(topLayer, overlap, size, delta) {
 function animation(time) {
   if (lastTime) {
     const timePassed = time - lastTime;
-    const speed = 0.005;
+    const speed = isMobile ? 0.003 : 0.005; // Slower speed for mobile
 
     const topLayer = stack[stack.length - 1];
 
@@ -616,7 +627,10 @@ function missedTheSpot() {
 // Handle keyboard inputs
 window.addEventListener("keydown", handleInput);
 
+let inputCooldown = false;
+
 function handleInput(event) {
+  if (inputCooldown) return;
   if (event.key === ' ' || event.type === 'touchend') {
     if (autopilot) {
       startGame();
@@ -634,6 +648,13 @@ function handleInput(event) {
       bestScoreElement.innerText = `Best Score: ${bestScore}`;
       updateBestScore();
     }
+  }
+  // Set cooldown for mobile
+  if (isMobile) {
+    inputCooldown = true;
+    setTimeout(() => {
+      inputCooldown = false;
+    }, 200);
   }
 }
 
