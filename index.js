@@ -35,13 +35,18 @@ const resultsElement = document.getElementById("results");
 // Initialize touch controls
 function initTouchControls() {
   if (isMobile) {
-    document.addEventListener('touchstart', handleTouchStart);
-    document.addEventListener('touchend', handleTouchEnd);
-    document.addEventListener('touchmove', handleTouchMove);
+    const pauseBtn = document.getElementById('mobile-pause');
+    const restartBtn = document.getElementById('mobile-restart');
     
-    // Mobile control buttons
-    document.getElementById('mobile-pause').addEventListener('touchstart', togglePause);
-    document.getElementById('mobile-restart').addEventListener('touchstart', startGame);
+    pauseBtn.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      togglePause();
+    });
+    
+    restartBtn.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      startGame();
+    });
   }
 }
 
@@ -152,19 +157,13 @@ function init() {
 function updateInstructionsForMobile() {
   if (isMobile) {
     document.getElementById('instructions').innerHTML = `
-      <p>Tap to start game</p>
-      <p>Tap to place blocks</p>
+      <p>Tap to start</p>
+      <p>Tap to stack</p>
     `;
     
     document.getElementById('results').innerHTML = `
       <span class="dela-gothic-one-regular">Game Over!</span>
       <p><span class="white-text">Tap to restart</span>
-    `;
-    
-    document.getElementById('resetScore').innerHTML = `
-      Tap '<span class="red-letter">⏸</span>' to pause
-      <br>
-      Tap '<span class="red-letter">↻</span>' to restart
     `;
   }
 }
@@ -264,8 +263,9 @@ function startGame() {
    camera.position.set(4, 4, 4);
    camera.lookAt(0, 0, 0);
 
+  // Reset pause button state
   if (isMobile) {
-    document.getElementById('mobile-controls').style.display = 'flex';
+    document.getElementById('mobile-pause').textContent = '⏸';
   }
    // First layer
    addLayer(isMobile ? -5 : -10, 0, originalBoxSize, originalBoxSize, "x"); // Closer starting position for mobile
@@ -649,6 +649,9 @@ function handleInput(event) {
       updateBestScore();
     }
   }
+
+  if (isMobile && event.type !== 'touchend') return;
+
   // Set cooldown for mobile
   if (isMobile) {
     inputCooldown = true;
@@ -699,12 +702,15 @@ function togglePause() {
   if (gameEnded || autopilot) return;
 
   isPaused = !isPaused;
+  const pauseBtn = document.getElementById('mobile-pause');
+  
   if (isPaused) {
+    pauseBtn.textContent = '▶';
     disableScroll();
     renderer.setAnimationLoop(null);
   } else {
+    pauseBtn.textContent = '⏸';
     enableScroll();
-    // Reset lastTime to current time to continue from paused position
     lastTime = performance.now();
     renderer.setAnimationLoop(animation);
   }
