@@ -600,7 +600,7 @@ function placeLayer() {
 
 function missedTheSpot() {
   const topLayer = stack[stack.length - 1];
-  const currentScore = stack.length - 2;
+  const currentScore = stack.length - 3; // Changed from -2 to -3 to match placeLayer()
 
   // Turn the top layer into an overhang and let it fall down
   addOverhang(
