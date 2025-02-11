@@ -278,7 +278,7 @@ function startGame() {
   if (resultsElement) resultsElement.style.display = "none";
   const resetScoreElement = document.getElementById("resetScore");
   if (resetScoreElement) resetScoreElement.style.display = "none";
-  if (scoreElement) scoreElement.innerText = 0;
+  if (scoreElement) scoreElement.innerText = "0";
 
   // hide scroll message
   const scrollMessage = document.getElementById("scrollMessage");
@@ -304,6 +304,9 @@ function startGame() {
         scene.remove(child);
       }
     }
+
+  bestScore = localStorage.getItem("bestScore") || 0;
+  bestScoreElement.innerText = `Best Score: ${bestScore}`;
 
     // Foundation
     addLayer(0, 0, originalBoxSize, originalBoxSize, "x", true);
@@ -582,7 +585,7 @@ function placeLayer() {
     addLayer(nextX, nextZ, newWidth, newDepth, nextDirection);
 
     // Update score
-    const score = stack.length - 2;
+    const score = stack.length - 3;
     scoreElement.innerText = score;
 
     // Play the stack sound
