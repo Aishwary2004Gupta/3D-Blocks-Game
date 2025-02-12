@@ -166,7 +166,7 @@ function updateInstructionsForMobile() {
     
     document.getElementById('results').innerHTML = `
       <span class="dela-gothic-one-regular">Game Over!</span>
-      <p><span class="white-text">Tap to restart</span>
+      <p><span class="white-text">Tap ↻ restart</span>
     `;
   }
 }
