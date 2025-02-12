@@ -267,7 +267,7 @@ body.game-over #instructions {
 
   #bestScore {
     position: absolute;
-    top: 110px;
+    top: 105px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 28px;
