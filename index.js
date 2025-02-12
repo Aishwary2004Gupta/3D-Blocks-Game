@@ -815,24 +815,11 @@ function showConfetti() {
 }
 
 function highlightBestScore(isFirstGame) {
-  const highlightDuration = 3000; // Duration in milliseconds (3 seconds)
-
-  bestScoreElement.style.transition = 'all 0.3s ease-in-out';
-  bestScoreElement.style.transform = 'scale(1.2)';
-  bestScoreElement.style.color = '#FFD700'; // Gold color
-  bestScoreElement.style.textShadow = '2px 2px 4px rgba(0,0,0,0.5)';
-
-  if (isFirstGame) {
-    bestScoreElement.textContent = 'Best Score: ' + bestScore;
-  } else {
-    bestScoreElement.textContent = 'New Best Score: ' + bestScore;
-  }
-
+  const highlightDuration = 3000;
+  
+  bestScoreElement.classList.add('highlight');
+  
   setTimeout(() => {
-    bestScoreElement.style.transition = 'all 0.3s ease-in-out';
-    bestScoreElement.style.transform = 'scale(1)';
-    bestScoreElement.style.color = ''; // Reset to default color
-    bestScoreElement.style.textShadow = '';
-    bestScoreElement.textContent = 'Best Score: ' + bestScore;
+    bestScoreElement.classList.remove('highlight');
   }, highlightDuration);
 }
