@@ -21,11 +21,19 @@ body {
 #bestScore {
   position: absolute;
   top: 10px;
-  right: 10px;
-  font-size: 20px;
-  padding: 8px 12px;
+  right: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   background: rgba(0, 0, 0, 0.4);
+  padding: 8px 15px;
   border-radius: 8px;
+  /* New properties to prevent movement */
+  /* min-width: 180px; */
+  text-align: right;
+  transition: none !important;
+  white-space: nowrap;
 }
 
 @media (max-width: 875px) {
@@ -38,13 +46,26 @@ body {
   }
   
   #bestScore {
+    /* Keep position fixed on mobile */
     top: 90px;
-    right: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 18px;
+    right: 20px;
+    left: auto; /* Remove centering */
+    transform: none; /* Remove translate */
+    font-size: 20px;
+    min-width: 140px;
     background: rgba(0, 0, 0, 0.6);
   }
+}
+
+/* Update highlight animation */
+@keyframes score-highlight {
+  0% { text-shadow: 0 0 10px gold; }
+  50% { text-shadow: 0 0 20px gold; }
+  100% { text-shadow: 0 0 10px gold; }
+}
+
+.highlight {
+  animation: score-highlight 1s ease-in-out infinite;
 }
 
 .bitter-reset-score {
@@ -247,15 +268,20 @@ body.game-over #instructions {
 
   #bestScore {
     position: absolute;
-    top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-    color: white;
-    background: rgba(0,0,0,0.6);
+    top: 110px;
+    right: 300px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    background: rgba(0, 0, 0, 0.4);
     padding: 8px 15px;
-    border-radius: 10px;
-    z-index: 1000;
+    border-radius: 8px;
+    /* New properties to prevent movement */
+    /* min-width: 180px; */
+    text-align: right;
+    transition: none !important;
+    white-space: nowrap;
   }
 
   /* Hide desktop-only text on mobile */
