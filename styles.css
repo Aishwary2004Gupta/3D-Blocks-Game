@@ -28,7 +28,7 @@ body {
   border-radius: 8px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 875px) {
   #score {
     font-size: 50px;
     left: 50%;
@@ -194,7 +194,7 @@ body.game-over #instructions {
   z-index: 1000;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 875px) {
   #mobile-controls {
     display: flex;
     bottom: 30px;
@@ -230,7 +230,7 @@ body.game-over #instructions {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 875px) {
   #score {
     position: absolute;
     top: 20px;
@@ -259,7 +259,7 @@ body.game-over #instructions {
   }
 
   /* Hide desktop-only text on mobile */
-  @media (max-width: 768px) {
+  @media (max-width: 875px) {
     #resetScore, #scrollMessage {
       display: none !important;
     }
