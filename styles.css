@@ -46,14 +46,13 @@ body {
   }
   
   #bestScore {
-    /* Keep position fixed on mobile */
-    top: 90px;
-    right: 20px;
-    left: auto; /* Remove centering */
-    transform: none; /* Remove translate */
+    top: 120px; /* Position below score */
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
     font-size: 20px;
-    min-width: 140px;
     background: rgba(0, 0, 0, 0.6);
+    width: max-content;
   }
 }
 
@@ -268,8 +267,8 @@ body.game-over #instructions {
 
   #bestScore {
     position: absolute;
-    top: 110px;
-    right: 300px;
+    /* top: 10px; */
+    right: 30px;
     font-size: 28px;
     font-weight: bold;
     color: #ffffff;
@@ -277,9 +276,7 @@ body.game-over #instructions {
     background: rgba(0, 0, 0, 0.4);
     padding: 8px 15px;
     border-radius: 8px;
-    /* New properties to prevent movement */
-    /* min-width: 180px; */
-    text-align: right;
+    text-align: center;
     transition: none !important;
     white-space: nowrap;
   }
