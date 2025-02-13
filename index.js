@@ -261,6 +261,7 @@ function startGame() {
   overhangs = [];
 
   disableScroll();
+  document.getElementById('resetBestScore').style.display = 'none';
 
    // Reset camera position
    camera.position.set(4, 4, 4);
@@ -337,6 +338,8 @@ function endGame() {
     overhangs.push(lastBlock);
   }
 
+  document.getElementById('resetBestScore').style.display = 'block';
+
   if (isMobile) {
     document.getElementById('mobile-controls').style.display = 'flex';
   }
@@ -354,6 +357,16 @@ function endGame() {
   const scrollMessage = document.getElementById("scrollMessage");
   if (scrollMessage) scrollMessage.style.display = "block";
 }
+
+// Add event listener for reset button
+document.getElementById('resetBestScore').addEventListener('click', function() {
+  if (confirm("Are you sure you want to reset your best score?")) {
+    bestScore = 0;
+    localStorage.setItem("bestScore", bestScore);
+    bestScoreElement.innerText = `Best Score: ${bestScore}`;
+    this.style.display = 'none'; // Hide button after reset
+  }
+});
 
 function endGameAnimation(time) {
   updatePhysics(16);
