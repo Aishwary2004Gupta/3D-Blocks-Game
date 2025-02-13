@@ -338,9 +338,8 @@ function endGame() {
     overhangs.push(lastBlock);
   }
 
-  document.getElementById('resetBestScore').style.display = 'block';
-
   if (isMobile) {
+    document.getElementById('resetBestScore').style.display = 'block';
     document.getElementById('mobile-controls').style.display = 'flex';
   }
 
@@ -358,15 +357,17 @@ function endGame() {
   if (scrollMessage) scrollMessage.style.display = "block";
 }
 
+if (isMobile) {
 // Add event listener for reset button
-document.getElementById('resetBestScore').addEventListener('click', function() {
-  if (confirm("Are you sure you want to reset your best score?")) {
-    bestScore = 0;
-    localStorage.setItem("bestScore", bestScore);
-    bestScoreElement.innerText = `Best Score: ${bestScore}`;
-    this.style.display = 'none'; // Hide button after reset
-  }
-});
+  document.getElementById('resetBestScore').addEventListener('click', function() {
+    if (confirm("Are you sure you want to reset your best score?")) {
+      bestScore = 0;
+      localStorage.setItem("bestScore", bestScore);
+      bestScoreElement.innerText = `Best Score: ${bestScore}`;
+      this.style.display = 'none'; // Hide button after reset
+    }
+  });
+}
 
 function endGameAnimation(time) {
   updatePhysics(16);
