@@ -1,4 +1,4 @@
-# 3 Dimensional Blocks Falling Game 
+# 3 Dimensional Blocks Falling Game
 
 Three.js is a cross browser javascript library that uses WebGl under the hood.
 Using CannonJs for the physics (block breaking and falling down)
